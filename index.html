@@ -273,6 +273,37 @@
     box-shadow: 0 8px 24px rgba(0, 217, 255, 0.2);
   }
 
+  .login-mode-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .mode-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .mode-btn:hover {
+    border-color: var(--accent2);
+    background: var(--surface2);
+  }
+
+  .mode-btn.active {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    color: var(--bg);
+    border-color: var(--accent2);
+  }
+
   .login-error {
     background: rgba(255, 68, 119, 0.1);
     border: 1px solid var(--accent3);
@@ -328,6 +359,26 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--accent);
+  }
+
+  .couple-selector {
+    margin-top: 8px;
+  }
+
+  .person-btn {
+    background: var(--surface2);
+    border: 1px solid var(--accent2);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .person-btn:hover {
+    background: var(--accent2);
+    color: var(--bg);
   }
 
   .header-right {
@@ -759,6 +810,23 @@
     height: 60px;
   }
 
+  .btn-add-cat {
+    background: var(--surface2);
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+
+  .btn-add-cat:hover {
+    background: var(--accent2);
+    color: var(--bg);
+  }
+  }
+
   .btn-add {
     width: 100%;
     padding: 12px;
@@ -1036,6 +1104,13 @@
     margin-bottom: 0;
   }
 
+  .couple-stat-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+
   /* LIST CARD */
   .list-card {
     background: var(--surface);
@@ -1135,6 +1210,12 @@
 
   .exp-comment {
     color: var(--muted);
+  }
+
+  .exp-person {
+    color: var(--accent2);
+    font-weight: 500;
+    font-size: 12px;
   }
 
   .exp-date {
@@ -1550,7 +1631,15 @@
       <h1>FinTeam</h1>
       <div class="subtitle">Gestor de gastos</div>
     </div>
-    <div class="login-form">
+
+    <!-- Modo Individual o Pareja -->
+    <div class="login-mode-selector">
+      <button class="mode-btn active" onclick="switchLoginMode('individual')" id="modeBtn-individual">👤 Individual</button>
+      <button class="mode-btn" onclick="switchLoginMode('couple')" id="modeBtn-couple">💑 Pareja</button>
+    </div>
+
+    <!-- MODO INDIVIDUAL -->
+    <div class="login-form" id="individualForm">
       <div class="form-group">
         <label>Nombre</label>
         <input type="text" id="loginName" placeholder="Tu nombre" maxlength="20">
@@ -1562,6 +1651,28 @@
       <button class="btn-login" onclick="login()">Entrar</button>
       <div class="login-error" id="loginError"></div>
     </div>
+
+    <!-- MODO PAREJA -->
+    <div class="login-form" id="coupleForm" style="display:none;">
+      <div class="form-group">
+        <label>Nombre Pareja</label>
+        <input type="text" id="coupleNameInput" placeholder="Ej: Juan & María" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label>Tu Nombre</label>
+        <input type="text" id="coupleUser1Name" placeholder="Tu nombre" maxlength="15">
+      </div>
+      <div class="form-group">
+        <label>Nombre de tu pareja</label>
+        <input type="text" id="coupleUser2Name" placeholder="Nombre de tu pareja" maxlength="15">
+      </div>
+      <div class="form-group">
+        <label>Presupuesto Conjunto (€)</label>
+        <input type="number" id="coupleBudget" placeholder="300-100000" min="300" max="100000" value="1000">
+      </div>
+      <button class="btn-login" onclick="loginCouple()">Crear Pareja</button>
+      <div class="login-error" id="loginErrorCouple"></div>
+    </div>
   </div>
 </div>
 
@@ -1570,6 +1681,10 @@
     <div class="header-left">
       <h1>💰 FinTeam</h1>
       <div class="user-label">Sesión: <span id="userName">Usuario</span></div>
+      <!-- Selector de persona en pareja -->
+      <div class="couple-selector" id="coupleSelector" style="display:none;">
+        <button class="person-btn" onclick="switchPerson()" id="personSwitchBtn" style="margin-top: 8px; padding: 6px 10px; font-size: 11px;"></button>
+      </div>
     </div>
     <div class="header-right">
       <div class="user-badge">
@@ -1649,7 +1764,10 @@
         <input type="number" id="inputAmount" placeholder="0.00" min="0" step="0.01">
       </div>
       <div class="form-group" id="categoryGroup">
-        <label>Categoría</label>
+        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+          <label>Categoría</label>
+          <button type="button" class="btn-add-cat" onclick="openCustomCategoryModal()" title="Crear categoría personalizada">➕</button>
+        </div>
         <select id="inputCat">
           <option value="🛒 Mercado">🛒 Mercado</option>
           <option value="🍔 Comida fuera">🍔 Comida fuera</option>
@@ -1672,6 +1790,7 @@
           
           <optgroup label="🏠 HOGAR">
             <option value="🏠 Hogar - Alquiler">🏠 Alquiler</option>
+            <option value="🏡 Hogar - Hipoteca">🏡 Hipoteca</option>
             <option value="⚡ Hogar - Luz">⚡ Luz</option>
             <option value="💧 Hogar - Agua">💧 Agua</option>
             <option value="🧹 Hogar - Limpieza">🧹 Limpieza</option>
@@ -1874,6 +1993,7 @@
           
           <optgroup label="🏠 HOGAR">
             <option value="🏠 Hogar - Alquiler">🏠 Alquiler</option>
+            <option value="🏡 Hogar - Hipoteca">🏡 Hipoteca</option>
             <option value="⚡ Hogar - Luz">⚡ Luz</option>
             <option value="💧 Hogar - Agua">💧 Agua</option>
             <option value="🧹 Hogar - Limpieza">🧹 Limpieza</option>
@@ -1960,6 +2080,37 @@
   </div>
 </div>
 
+<!-- MODAL DE CATEGORÍAS PERSONALIZADAS -->
+<div class="modal-overlay" id="customCategoryOverlay" style="display:none;" onclick="if(event.target === this) closeCustomCategoryModal()">
+  <div class="modal" id="customCategoryModal" style="max-width: 400px;">
+    <div class="modal-header">
+      <h2>✨ Crear Categoría Personalizada</h2>
+      <button class="btn-close" onclick="closeCustomCategoryModal()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Emoji (ej: 🎨, 🎭, 📸)</label>
+        <input type="text" id="customCatEmoji" placeholder="Elige un emoji" maxlength="2">
+      </div>
+      <div class="form-group">
+        <label>Nombre (ej: Arte, Hobbies)</label>
+        <input type="text" id="customCatName" placeholder="Nombre de categoría" maxlength="20">
+      </div>
+      
+      <div style="background: var(--surface2); border-radius: 8px; padding: 12px; margin-top: 16px;">
+        <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">📋 Tus categorías personalizadas:</div>
+        <div id="customCatsList" style="max-height: 150px; overflow-y: auto;"></div>
+      </div>
+
+      <div class="modal-buttons" style="margin-top: 16px;">
+        <button class="btn-cancel" onclick="closeCustomCategoryModal()">Cancelar</button>
+        <button class="btn-submit" onclick="addCustomCategory()">Crear Categoría</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const CAT_COLORS = [
     '#00d9ff','#00ff88','#ff4477','#ff88ff','#ffaa00',
@@ -1971,6 +2122,7 @@
   let currentUserExpenses = [];
   let currentUserIncomes = [];
   let filteredExpenses = [];
+  let customCategories = JSON.parse(localStorage.getItem('finteam_custom_categories') || '[]');
   let chart = null;
   let editingId = null;
   let editingType = null;
@@ -1980,6 +2132,27 @@
   let formMode = 'expense';
 
   document.getElementById('inputDate').valueAsDate = new Date();
+
+  // Cargar categorías personalizadas en el select
+  function loadCustomCategoriesInSelect() {
+    const select = document.getElementById('inputCat');
+    const lastOption = select.querySelector('option[value="📦 Otro"]');
+    
+    customCategories.forEach(cat => {
+      if (!select.querySelector(`option[value="${cat.id}"]`)) {
+        const option = document.createElement('option');
+        option.value = cat.id;
+        option.textContent = cat.id;
+        if (lastOption) {
+          lastOption.parentNode.insertBefore(option, lastOption);
+        } else {
+          select.appendChild(option);
+        }
+      }
+    });
+  }
+
+  loadCustomCategoriesInSelect();
 
   function getCatIcon(cat) {
     return cat.split(' ')[0];
@@ -2023,6 +2196,199 @@
     }
 
     clearForm();
+  }
+
+  function switchPerson() {
+    if (!currentUser.isCouple) return;
+    
+    // Cambiar persona
+    const newPerson = currentUser.currentPerson === currentUser.user1 ? currentUser.user2 : currentUser.user1;
+    currentUser.currentPerson = newPerson;
+    
+    // Actualizar botón
+    updatePersonSwitchBtn();
+    
+    showToast('👤 Ahora eres ' + newPerson);
+  }
+
+  function updatePersonSwitchBtn() {
+    const btn = document.getElementById('personSwitchBtn');
+    if (!btn || !currentUser.isCouple) return;
+    
+    const otherPerson = currentUser.currentPerson === currentUser.user1 ? currentUser.user2 : currentUser.user1;
+    btn.textContent = '👤 Cambiar a ' + otherPerson;
+  }
+
+  function openCustomCategoryModal() {
+    document.getElementById('customCategoryOverlay').style.display = 'flex';
+    renderCustomCategoriesList();
+  }
+
+  function closeCustomCategoryModal() {
+    document.getElementById('customCategoryOverlay').style.display = 'none';
+    document.getElementById('customCatEmoji').value = '';
+    document.getElementById('customCatName').value = '';
+  }
+
+  function addCustomCategory() {
+    const emoji = document.getElementById('customCatEmoji').value.trim();
+    const name = document.getElementById('customCatName').value.trim();
+
+    if (!emoji || emoji.length === 0) {
+      showToast('⚠️ Selecciona un emoji');
+      return;
+    }
+
+    if (!name || name.length < 2) {
+      showToast('⚠️ Pon un nombre válido');
+      return;
+    }
+
+    const categoryId = emoji + ' ' + name;
+    
+    if (customCategories.some(c => c.id === categoryId)) {
+      showToast('⚠️ Esta categoría ya existe');
+      return;
+    }
+
+    customCategories.push({ id: categoryId, emoji, name });
+    localStorage.setItem('finteam_custom_categories', JSON.stringify(customCategories));
+
+    // Agregar a select
+    const select = document.getElementById('inputCat');
+    const option = document.createElement('option');
+    option.value = categoryId;
+    option.textContent = categoryId;
+    
+    // Insertar antes de "Otro"
+    const lastOption = select.querySelector('option[value="📦 Otro"]');
+    if (lastOption) {
+      lastOption.parentNode.insertBefore(option, lastOption);
+    } else {
+      select.appendChild(option);
+    }
+
+    showToast('✅ Categoría personalizada creada: ' + categoryId);
+    renderCustomCategoriesList();
+  }
+
+  function renderCustomCategoriesList() {
+    const listDiv = document.getElementById('customCatsList');
+    
+    if (customCategories.length === 0) {
+      listDiv.innerHTML = '<div style="color: var(--muted); font-size: 12px;">No tienes categorías personalizadas aún.</div>';
+    } else {
+      listDiv.innerHTML = customCategories.map(cat => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--surface); border-radius: 6px; margin-bottom: 6px;">
+          <span style="font-size: 13px;">${cat.id}</span>
+          <button class="btn-del" style="padding: 0; font-size: 12px;" onclick="deleteCustomCategory('${cat.id}')">✕</button>
+        </div>
+      `).join('');
+    }
+  }
+
+  function deleteCustomCategory(categoryId) {
+    customCategories = customCategories.filter(c => c.id !== categoryId);
+    localStorage.setItem('finteam_custom_categories', JSON.stringify(customCategories));
+
+    // Eliminar del select
+    const select = document.getElementById('inputCat');
+    const optionToRemove = Array.from(select.options).find(opt => opt.value === categoryId);
+    if (optionToRemove) {
+      optionToRemove.remove();
+    }
+
+    showToast('🗑️ Categoría eliminada');
+    renderCustomCategoriesList();
+  }
+
+  function switchLoginMode(mode) {
+    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('modeBtn-' + mode).classList.add('active');
+    
+    const individualForm = document.getElementById('individualForm');
+    const coupleForm = document.getElementById('coupleForm');
+    
+    if (mode === 'individual') {
+      individualForm.style.display = 'block';
+      coupleForm.style.display = 'none';
+    } else {
+      individualForm.style.display = 'none';
+      coupleForm.style.display = 'block';
+    }
+  }
+
+  function loginCouple() {
+    const coupleName = document.getElementById('coupleNameInput').value.trim();
+    const user1Name = document.getElementById('coupleUser1Name').value.trim();
+    const user2Name = document.getElementById('coupleUser2Name').value.trim();
+    const budget = parseFloat(document.getElementById('coupleBudget').value);
+    const error = document.getElementById('loginErrorCouple');
+
+    if (!coupleName || coupleName.length < 3) {
+      error.textContent = '❌ Pon un nombre para la pareja';
+      error.classList.add('show');
+      return;
+    }
+
+    if (!user1Name || !user2Name || user1Name.length < 2 || user2Name.length < 2) {
+      error.textContent = '❌ Ambos nombres deben tener al menos 2 caracteres';
+      error.classList.add('show');
+      return;
+    }
+
+    if (user1Name.toLowerCase() === user2Name.toLowerCase()) {
+      error.textContent = '❌ Los nombres deben ser diferentes';
+      error.classList.add('show');
+      return;
+    }
+
+    if (isNaN(budget) || budget < 300 || budget > 100000) {
+      error.textContent = '❌ Presupuesto entre 300€ y 100.000€';
+      error.classList.add('show');
+      return;
+    }
+
+    error.classList.remove('show');
+
+    // Crear cuenta de pareja
+    if (!allUsers[coupleName]) {
+      allUsers[coupleName] = {
+        budget,
+        expenses: [],
+        incomes: [],
+        isCouple: true,
+        user1: user1Name,
+        user2: user2Name
+      };
+    }
+
+    currentUser = {
+      name: coupleName,
+      budget: allUsers[coupleName].budget,
+      expenses: allUsers[coupleName].expenses || [],
+      isCouple: true,
+      user1: user1Name,
+      user2: user2Name,
+      currentPerson: user1Name
+    };
+
+    currentUserExpenses = currentUser.expenses;
+    currentUserIncomes = allUsers[coupleName].incomes || [];
+    filteredExpenses = currentUserExpenses;
+
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('appScreen').classList.add('active');
+
+    document.getElementById('userName').textContent = coupleName + ' 💑';
+    document.getElementById('userBudgetDisplay').textContent = budget + '€';
+    document.getElementById('userAvatar').textContent = user1Name.charAt(0).toUpperCase() + user2Name.charAt(0).toUpperCase();
+    document.getElementById('totalBudget').textContent = budget + '€';
+
+    // Mostrar indicador de pareja
+    showToast('💑 ¡Cuenta de pareja creada! ' + user1Name + ' & ' + user2Name);
+
+    render();
   }
 
   function login() {
@@ -2106,14 +2472,20 @@
     if (editingId !== null) {
       const index = currentUserExpenses.findIndex(e => e.id === editingId);
       if (index !== -1) {
-        currentUserExpenses[index] = { id: editingId, name, amount, cat, date, comment };
+        const existingExpense = currentUserExpenses[index];
+        currentUserExpenses[index] = { 
+          id: editingId, 
+          name, amount, cat, date, comment,
+          person: existingExpense.person || 'Desconocido'
+        };
         showToast('✏️ Gasto actualizado correctamente');
         editingId = null;
       }
     } else {
       const expense = {
         id: Date.now(),
-        name, amount, cat, date, comment
+        name, amount, cat, date, comment,
+        person: currentUser.isCouple ? currentUser.currentPerson : currentUser.name
       };
       currentUserExpenses.unshift(expense);
       showToast('✅ Gasto añadido correctamente');
@@ -2358,6 +2730,15 @@
     fill.style.width = pct + '%';
     fill.className = 'progress-fill' + (pct >= 90 ? ' danger' : '');
 
+    // Mostrar/ocultar selector de pareja
+    const coupleSelector = document.getElementById('coupleSelector');
+    if (currentUser.isCouple) {
+      coupleSelector.style.display = 'block';
+      updatePersonSwitchBtn();
+    } else {
+      coupleSelector.style.display = 'none';
+    }
+
     // Mostrar filtros y gráfico
     if (currentUserExpenses.length > 0) {
       document.getElementById('filterBar').style.display = 'flex';
@@ -2441,6 +2822,7 @@
             </div>
             <div class="exp-meta">
               <span class="exp-cat">${e.cat.substring(2)}</span>
+              ${currentUser.isCouple ? `<span class="exp-person">👤 ${e.person || 'Desconocido'}</span>` : ''}
               ${e.comment ? `<span class="exp-comment">· ${e.comment}</span>` : ''}
               <span class="exp-date">${formatDate(e.date)}</span>
             </div>
@@ -2693,6 +3075,47 @@
     insightsHTML = insights.map(insight => `<div class="insight-item">${insight}</div>`).join('');
 
     document.getElementById('insightsContainer').innerHTML = insightsHTML;
+
+    // SECCIÓN 5: Estadísticas por Persona (si es pareja)
+    if (currentUser.isCouple) {
+      const person1Expenses = currentUserExpenses.filter(e => e.person === currentUser.user1);
+      const person2Expenses = currentUserExpenses.filter(e => e.person === currentUser.user2);
+      
+      const person1Total = person1Expenses.reduce((s, e) => s + e.amount, 0);
+      const person2Total = person2Expenses.reduce((s, e) => s + e.amount, 0);
+      const grandTotal = person1Total + person2Total;
+
+      const person1Pct = grandTotal > 0 ? ((person1Total / grandTotal) * 100).toFixed(1) : 0;
+      const person2Pct = grandTotal > 0 ? ((person2Total / grandTotal) * 100).toFixed(1) : 0;
+
+      let coupleStatsHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="couple-stat-item">
+            <div style="font-weight: 600; color: var(--accent); margin-bottom: 8px;">👤 ${currentUser.user1}</div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px;">${person1Total.toFixed(2)}€</div>
+            <div style="font-size: 12px; color: var(--muted);">${person1Pct}% del total</div>
+            <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">${person1Expenses.length} gastos</div>
+          </div>
+          <div class="couple-stat-item">
+            <div style="font-weight: 600; color: var(--accent2); margin-bottom: 8px;">👤 ${currentUser.user2}</div>
+            <div style="font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px;">${person2Total.toFixed(2)}€</div>
+            <div style="font-size: 12px; color: var(--muted);">${person2Pct}% del total</div>
+            <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">${person2Expenses.length} gastos</div>
+          </div>
+        </div>
+      `;
+
+      let coupleSection = document.getElementById('coupleStatsContainer');
+      if (!coupleSection) {
+        coupleSection = document.createElement('div');
+        coupleSection.id = 'coupleStatsContainer';
+        coupleSection.style.cssText = 'padding: 16px; border-radius: 12px; background: var(--surface2); border: 1px solid var(--border); margin-top: 12px;';
+        coupleSection.innerHTML = `<div style="font-weight: 600; color: var(--accent); margin-bottom: 12px;">💑 Desglose por Persona</div>` + coupleStatsHTML;
+        document.getElementById('analysisCard').appendChild(coupleSection);
+      } else {
+        coupleSection.innerHTML = `<div style="font-weight: 600; color: var(--accent); margin-bottom: 12px;">💑 Desglose por Persona</div>` + coupleStatsHTML;
+      }
+    }
   }
 
   function generateFunMessage() {
