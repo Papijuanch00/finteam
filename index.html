@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinTeam — Rastreador de Gastos Compartido</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <style>
   :root {
@@ -17,6 +17,143 @@
     --accent3: #ff4477;
     --text: #f0f5ff;
     --muted: #8a96a6;
+    --bg-pattern: none;
+  }
+
+  /* TEMAS DE COLOR */
+  body.theme-dark {
+    --bg: #0a0e1a;
+    --surface: #12172b;
+    --surface2: #1a1f38;
+    --border: #2a3050;
+    --accent: #00d9ff;
+    --accent2: #00ff88;
+    --accent3: #ff4477;
+  }
+
+  body.theme-blue {
+    --bg: #0f1f3f;
+    --surface: #1a2a4a;
+    --surface2: #253a5a;
+    --border: #3a4a6a;
+    --accent: #00bfff;
+    --accent2: #00d9ff;
+    --accent3: #ff6b9d;
+  }
+
+  body.theme-green {
+    --bg: #0f2a1a;
+    --surface: #1a3a2a;
+    --surface2: #254a3a;
+    --border: #3a6a4a;
+    --accent: #00ff88;
+    --accent2: #00ffaa;
+    --accent3: #ff4477;
+  }
+
+  body.theme-purple {
+    --bg: #2a0f3a;
+    --surface: #3a1a4a;
+    --surface2: #4a2a5a;
+    --border: #6a3a7a;
+    --accent: #bb86fc;
+    --accent2: #cf64ff;
+    --accent3: #ff4477;
+  }
+
+  body.theme-pink {
+    --bg: #3a0f2a;
+    --surface: #4a1a3a;
+    --surface2: #5a2a4a;
+    --border: #7a3a5a;
+    --accent: #ff4477;
+    --accent2: #ff69b4;
+    --accent3: #ffb6c1;
+  }
+
+  /* FONDOS */
+  body.bg-default {
+    --bg-pattern: none;
+  }
+
+  body.bg-gradient1 {
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a1a2e 50%, #16213e 100%) !important;
+  }
+
+  body.bg-gradient2 {
+    background: linear-gradient(135deg, #1a0033 0%, #330066 50%, #003366 100%) !important;
+  }
+
+  body.bg-gradient3 {
+    background: linear-gradient(135deg, #003333 0%, #003366 50%, #330033 100%) !important;
+  }
+
+  body.bg-grid {
+    background: 
+      linear-gradient(0deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent),
+      linear-gradient(90deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent);
+    background-color: #0a0e1a;
+    background-size: 50px 50px;
+  }
+
+  body.bg-cosmic {
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, #0a0e1a 0%, #1a0a2e 100%);
+    background-attachment: fixed;
+  }
+
+  body.bg-matrix {
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 217, 255, 0.03) 0px,
+        rgba(0, 217, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(0, 255, 136, 0.03) 0px,
+        rgba(0, 255, 136, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      ),
+      linear-gradient(135deg, #0a0e1a 0%, #0a1a2e 100%);
+    background-size: 100% 2px, 2px 100%, 100% 100%;
+  }
+
+  body.bg-aurora {
+    background: 
+      linear-gradient(180deg, 
+        rgba(0, 217, 255, 0.05) 0%,
+        rgba(0, 255, 136, 0.03) 25%,
+        rgba(255, 68, 119, 0.03) 50%,
+        rgba(0, 217, 255, 0.05) 75%,
+        #0a0e1a 100%),
+      linear-gradient(135deg, #0a0e1a 0%, #1a0a3e 100%);
+  }
+
+  body.bg-dots {
+    background-image: 
+      radial-gradient(circle, rgba(0, 217, 255, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-color: #0a0e1a;
+  }
+
+  body.bg-waves {
+    background: 
+      linear-gradient(0deg, transparent 24%, rgba(0, 217, 255, 0.05) 25%, rgba(0, 217, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 217, 255, 0.05) 75%, rgba(0, 217, 255, 0.05) 76%, transparent 77%, transparent),
+      linear-gradient(45deg, transparent 24%, rgba(0, 255, 136, 0.05) 25%, rgba(0, 255, 136, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 136, 0.05) 75%, rgba(0, 255, 136, 0.05) 76%, transparent 77%, transparent);
+    background-color: #0a0e1a;
+    background-size: 60px 60px;
+  }
+
+  body.bg-neon {
+    background: 
+      linear-gradient(135deg, #0a0e1a 0%, #1a0a2a 50%, #0a1a2a 100%);
+    box-shadow: inset 0 0 60px rgba(0, 217, 255, 0.1), inset 0 0 120px rgba(0, 255, 136, 0.05);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,11 +161,11 @@
   body {
     background: linear-gradient(135deg, var(--bg) 0%, #0f1220 100%);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.6;
-    letter-spacing: 0.3px;
+    line-height: 1.7;
+    letter-spacing: 0.2px;
     min-height: 100vh;
     padding: 24px 16px 80px;
   }
@@ -65,7 +202,7 @@
   .login-logo .icon { font-size: 48px; margin-bottom: 16px; }
 
   .login-logo h1 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 28px;
     font-weight: 600;
     letter-spacing: -1px;
@@ -104,7 +241,7 @@
     border-radius: 10px;
     padding: 12px;
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 13px;
     outline: none;
     transition: all 0.3s;
@@ -122,7 +259,7 @@
     color: var(--bg);
     border: none;
     border-radius: 10px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -175,11 +312,15 @@
   }
 
   .header-left h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 28px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -1px;
     margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .header-left .user-label {
@@ -224,7 +365,7 @@
     border-radius: 8px;
     padding: 8px 12px;
     color: var(--muted);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 10px;
     letter-spacing: 1px;
     cursor: pointer;
@@ -234,6 +375,76 @@
   .btn-logout:hover {
     color: var(--accent3);
     border-color: var(--accent3);
+  }
+
+  .btn-settings {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-settings:hover {
+    color: var(--accent2);
+    border-color: var(--accent2);
+    transform: rotate(15deg);
+  }
+
+  /* SETTINGS MODAL */
+  .settings-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .settings-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .settings-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .theme-buttons, .bg-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .theme-btn, .bg-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .theme-btn:hover, .bg-btn:hover {
+    border-color: var(--accent2);
+    transform: translateY(-2px);
+  }
+
+  .theme-btn.active, .bg-btn.active {
+    background: var(--accent2);
+    color: var(--bg);
+    border-color: var(--accent2);
   }
 
   /* BALANCE CARD */
@@ -262,19 +473,20 @@
   }
 
   .balance-item .bal-label {
-    font-size: 11px;
-    letter-spacing: 1px;
+    font-size: 12px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
   }
 
   .balance-item .bal-value {
-    font-family: 'Poppins', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -1px;
   }
 
   .bal-value.budget { color: var(--accent); }
@@ -321,7 +533,7 @@
   }
 
   .export-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 600;
     color: var(--accent2);
@@ -346,7 +558,7 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 600;
     font-size: 13px;
   }
@@ -455,11 +667,12 @@
   }
 
   .form-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
     margin-bottom: 20px;
     color: var(--accent);
+    letter-spacing: -0.5px;
   }
 
   .form-tabs {
@@ -475,7 +688,7 @@
     color: var(--text);
     padding: 12px;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -528,7 +741,7 @@
     border-radius: 8px;
     padding: 10px;
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 13px;
     outline: none;
     transition: all 0.3s;
@@ -553,7 +766,7 @@
     color: var(--bg);
     border: none;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -586,7 +799,7 @@
   }
 
   .chart-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -614,7 +827,7 @@
   }
 
   .cats-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 16px;
@@ -665,7 +878,7 @@
   }
 
   .cat-amount {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--accent);
@@ -681,7 +894,7 @@
   }
 
   .analysis-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -708,7 +921,7 @@
   }
 
   .section-header {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--accent2);
@@ -730,7 +943,7 @@
   }
 
   .top-cat-rank {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 600;
     color: var(--accent);
     min-width: 30px;
@@ -839,7 +1052,7 @@
   }
 
   .list-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 600;
     color: var(--accent);
@@ -902,7 +1115,7 @@
   }
 
   .exp-amount {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--accent3);
@@ -1000,7 +1213,7 @@
   }
 
   .inc-amount {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--accent2);
@@ -1088,7 +1301,7 @@
   }
 
   .modal-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -1106,7 +1319,7 @@
     padding: 12px;
     border: none;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -1181,7 +1394,7 @@
   }
 
   .daily-weekly-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -1201,7 +1414,7 @@
     color: var(--text);
     padding: 10px 16px;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -1246,7 +1459,7 @@
   }
 
   .summary-value {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 24px;
     font-weight: 600;
     color: var(--accent);
@@ -1363,6 +1576,7 @@
         <div class="user-avatar" id="userAvatar">U</div>
         <span id="userBudgetDisplay">540€</span>
       </div>
+      <button class="btn-settings" onclick="openSettings()">⚙️</button>
       <button class="btn-logout" onclick="logout()">Salir</button>
     </div>
   </div>
@@ -1701,6 +1915,47 @@
     <div class="modal-buttons">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
       <button class="btn-save" onclick="saveEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIGURACIÓN -->
+<div class="modal" id="settingsModal" style="display:none;">
+  <div class="modal-content">
+    <div class="modal-title">⚙️ Configuración</div>
+    
+    <!-- Tema de Color -->
+    <div class="settings-section">
+      <div class="settings-header">🎨 Tema de Color</div>
+      <div class="theme-buttons">
+        <button class="theme-btn" onclick="setTheme('dark')" id="themeBtn-dark">🌙 Oscuro</button>
+        <button class="theme-btn" onclick="setTheme('blue')" id="themeBtn-blue">💙 Azul</button>
+        <button class="theme-btn" onclick="setTheme('green')" id="themeBtn-green">💚 Verde</button>
+        <button class="theme-btn" onclick="setTheme('purple')" id="themeBtn-purple">💜 Púrpura</button>
+        <button class="theme-btn" onclick="setTheme('pink')" id="themeBtn-pink">💗 Rosa</button>
+      </div>
+    </div>
+
+    <!-- Fondo de Pantalla -->
+    <div class="settings-section">
+      <div class="settings-header">🖼️ Fondo de Pantalla</div>
+      <div class="bg-buttons">
+        <button class="bg-btn" onclick="setBg('default')" id="bgBtn-default">Predeterminado</button>
+        <button class="bg-btn" onclick="setBg('gradient1')" id="bgBtn-gradient1">Degradado 1</button>
+        <button class="bg-btn" onclick="setBg('gradient2')" id="bgBtn-gradient2">Degradado 2</button>
+        <button class="bg-btn" onclick="setBg('gradient3')" id="bgBtn-gradient3">Degradado 3</button>
+        <button class="bg-btn" onclick="setBg('grid')" id="bgBtn-grid">Grid</button>
+        <button class="bg-btn" onclick="setBg('cosmic')" id="bgBtn-cosmic">Cósmico</button>
+        <button class="bg-btn" onclick="setBg('matrix')" id="bgBtn-matrix">Matrix</button>
+        <button class="bg-btn" onclick="setBg('aurora')" id="bgBtn-aurora">Aurora</button>
+        <button class="bg-btn" onclick="setBg('dots')" id="bgBtn-dots">Puntos</button>
+        <button class="bg-btn" onclick="setBg('waves')" id="bgBtn-waves">Ondas</button>
+        <button class="bg-btn" onclick="setBg('neon')" id="bgBtn-neon">Neón</button>
+      </div>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closeSettings()">Cerrar</button>
     </div>
   </div>
 </div>
@@ -3336,6 +3591,72 @@
       showToast('❌ Error al exportar PDF');
     }
   }
+
+  function openSettings() {
+    document.getElementById('settingsModal').style.display = 'flex';
+    updateSettingsUI();
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsModal').style.display = 'none';
+  }
+
+  function setTheme(themeName) {
+    document.body.className = document.body.className.replace(/theme-\w+/g, '');
+    document.body.classList.add('theme-' + themeName);
+    
+    // Guardar preferencia
+    localStorage.setItem('finteam_theme', themeName);
+    
+    // Actualizar UI de botones
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('themeBtn-' + themeName).classList.add('active');
+    
+    showToast('✅ Tema cambiado: ' + themeName);
+  }
+
+  function setBg(bgName) {
+    document.body.className = document.body.className.replace(/bg-\w+/g, '');
+    document.body.classList.add('bg-' + bgName);
+    
+    // Guardar preferencia
+    localStorage.setItem('finteam_bg', bgName);
+    
+    // Actualizar UI de botones
+    document.querySelectorAll('.bg-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('bgBtn-' + bgName).classList.add('active');
+    
+    showToast('✅ Fondo cambiado: ' + bgName);
+  }
+
+  function updateSettingsUI() {
+    const currentTheme = localStorage.getItem('finteam_theme') || 'dark';
+    const currentBg = localStorage.getItem('finteam_bg') || 'default';
+    
+    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.bg-btn').forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById('themeBtn-' + currentTheme)?.classList.add('active');
+    document.getElementById('bgBtn-' + currentBg)?.classList.add('active');
+  }
+
+  function loadPreferences() {
+    const savedTheme = localStorage.getItem('finteam_theme') || 'dark';
+    const savedBg = localStorage.getItem('finteam_bg') || 'default';
+    
+    setTheme(savedTheme);
+    setBg(savedBg);
+  }
+
+  // Cargar preferencias al iniciar
+  loadPreferences();
+
+  // Cerrar modal al hacer click fuera
+  document.getElementById('settingsModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeSettings();
+    }
+  });
 
   function showToast(msg) {
     const t = document.getElementById('toast');
