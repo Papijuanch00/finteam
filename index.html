@@ -2081,32 +2081,27 @@
 </div>
 
 <!-- MODAL DE CATEGORÍAS PERSONALIZADAS -->
-<div class="modal-overlay" id="customCategoryOverlay" style="display:none;" onclick="if(event.target === this) closeCustomCategoryModal()">
-  <div class="modal" id="customCategoryModal" style="max-width: 400px;">
-    <div class="modal-header">
-      <h2>✨ Crear Categoría Personalizada</h2>
-      <button class="btn-close" onclick="closeCustomCategoryModal()">✕</button>
+<div class="modal" id="customCategoryModal" style="display:none;">
+  <div class="modal-content">
+    <div class="modal-title">✨ Crear Categoría Personalizada</div>
+
+    <div class="form-group">
+      <label>Emoji (ej: 🎨, 🎭, 📸)</label>
+      <input type="text" id="customCatEmoji" placeholder="Elige un emoji" maxlength="2">
+    </div>
+    <div class="form-group">
+      <label>Nombre (ej: Arte, Hobbies)</label>
+      <input type="text" id="customCatName" placeholder="Nombre de categoría" maxlength="20">
+    </div>
+    
+    <div style="background: var(--surface2); border-radius: 8px; padding: 12px; margin-top: 16px;">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">📋 Tus categorías personalizadas:</div>
+      <div id="customCatsList" style="max-height: 150px; overflow-y: auto;"></div>
     </div>
 
-    <div class="modal-body">
-      <div class="form-group">
-        <label>Emoji (ej: 🎨, 🎭, 📸)</label>
-        <input type="text" id="customCatEmoji" placeholder="Elige un emoji" maxlength="2">
-      </div>
-      <div class="form-group">
-        <label>Nombre (ej: Arte, Hobbies)</label>
-        <input type="text" id="customCatName" placeholder="Nombre de categoría" maxlength="20">
-      </div>
-      
-      <div style="background: var(--surface2); border-radius: 8px; padding: 12px; margin-top: 16px;">
-        <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">📋 Tus categorías personalizadas:</div>
-        <div id="customCatsList" style="max-height: 150px; overflow-y: auto;"></div>
-      </div>
-
-      <div class="modal-buttons" style="margin-top: 16px;">
-        <button class="btn-cancel" onclick="closeCustomCategoryModal()">Cancelar</button>
-        <button class="btn-submit" onclick="addCustomCategory()">Crear Categoría</button>
-      </div>
+    <div class="modal-buttons" style="margin-top: 16px;">
+      <button class="btn-cancel" onclick="closeCustomCategoryModal()">Cancelar</button>
+      <button class="btn-save" onclick="addCustomCategory()">Crear</button>
     </div>
   </div>
 </div>
@@ -2220,12 +2215,16 @@
   }
 
   function openCustomCategoryModal() {
-    document.getElementById('customCategoryOverlay').style.display = 'flex';
+    const modal = document.getElementById('customCategoryModal');
+    modal.classList.add('show');
+    modal.style.display = 'flex';
     renderCustomCategoriesList();
   }
 
   function closeCustomCategoryModal() {
-    document.getElementById('customCategoryOverlay').style.display = 'none';
+    const modal = document.getElementById('customCategoryModal');
+    modal.classList.remove('show');
+    modal.style.display = 'none';
     document.getElementById('customCatEmoji').value = '';
     document.getElementById('customCatName').value = '';
   }
