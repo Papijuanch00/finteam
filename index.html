@@ -311,6 +311,71 @@
     background: linear-gradient(90deg, var(--accent3), #ff6699);
   }
 
+  /* EXPORT CARD */
+  .export-card {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+    border: 1px solid var(--accent2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .export-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .export-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .export-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .export-btn:hover {
+    border-color: var(--accent2);
+    background: rgba(0, 255, 136, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .export-btn.csv:hover {
+    border-color: var(--accent);
+    background: rgba(0, 217, 255, 0.1);
+  }
+
+  .export-btn.pdf:hover {
+    border-color: var(--accent3);
+    background: rgba(255, 68, 119, 0.1);
+  }
+
+  .export-icon {
+    font-size: 20px;
+  }
+
+  .export-text {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
   /* FUN MESSAGE CARD */
   .fun-message-card {
     background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 217, 255, 0.15) 100%);
@@ -604,6 +669,158 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--accent);
+  }
+
+  /* ANÁLISIS AVANZADO */
+  .analysis-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .analysis-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .analysis-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .analysis-section {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .analysis-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .section-header {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .top-cat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .top-cat-item:last-child {
+    border-bottom: none;
+  }
+
+  .top-cat-rank {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 30px;
+  }
+
+  .top-cat-name {
+    flex: 1;
+    font-size: 13px;
+  }
+
+  .top-cat-percent {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .trend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: var(--surface2);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .trend-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .trend-label {
+    flex: 1;
+  }
+
+  .trend-value {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .trend-positive {
+    color: var(--accent2);
+  }
+
+  .trend-negative {
+    color: var(--accent3);
+  }
+
+  .recurring-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: var(--surface2);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .recurring-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .recurring-name {
+    flex: 1;
+  }
+
+  .recurring-count {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 30px;
+    text-align: center;
+  }
+
+  .insight-item {
+    padding: 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    border-left: 3px solid var(--accent2);
+  }
+
+  .insight-item:last-child {
+    margin-bottom: 0;
   }
 
   /* LIST CARD */
@@ -1177,6 +1394,21 @@
     </div>
   </div>
 
+  <!-- EXPORTAR DATOS -->
+  <div class="export-card">
+    <div class="export-title">📥 Exportar Datos</div>
+    <div class="export-buttons">
+      <button class="export-btn csv" onclick="exportToCSV()">
+        <span class="export-icon">📊</span>
+        <span class="export-text">Descargar CSV</span>
+      </button>
+      <button class="export-btn pdf" onclick="exportToPDF()">
+        <span class="export-icon">📄</span>
+        <span class="export-text">Descargar PDF</span>
+      </button>
+    </div>
+  </div>
+
   <!-- MENSAJE DIVERTIDO -->
   <div class="fun-message-card" id="funMessageCard">
     <div class="fun-icon" id="funIcon">💬</div>
@@ -1280,6 +1512,37 @@
   <div class="cats-card" id="catsCard">
     <div class="cats-title">📈 Resumen por categoría</div>
     <div id="catsList"></div>
+  </div>
+
+  <!-- ANÁLISIS AVANZADO -->
+  <div class="analysis-card" id="analysisCard" style="display:none;">
+    <div class="analysis-title">🔍 Análisis Avanzado</div>
+    
+    <div class="analysis-sections">
+      <!-- Sección 1: Top 3 Categorías -->
+      <div class="analysis-section">
+        <div class="section-header">🏆 Top 3 Categorías</div>
+        <div id="topCategoriesContainer"></div>
+      </div>
+
+      <!-- Sección 2: Tendencias -->
+      <div class="analysis-section">
+        <div class="section-header">📊 Tendencias (Este mes vs Mes anterior)</div>
+        <div id="trendsContainer"></div>
+      </div>
+
+      <!-- Sección 3: Gastos Recurrentes -->
+      <div class="analysis-section">
+        <div class="section-header">🔄 Gastos Recurrentes Detectados</div>
+        <div id="recurringContainer"></div>
+      </div>
+
+      <!-- Sección 4: Insights -->
+      <div class="analysis-section">
+        <div class="section-header">💡 Insights & Recomendaciones</div>
+        <div id="insightsContainer"></div>
+      </div>
+    </div>
   </div>
 
   <!-- CONTROL DIARIO/SEMANAL -->
@@ -1881,6 +2144,7 @@
     renderIncomeList();
     updateChart();
     updateDailyWeekly();
+    generateAdvancedAnalysis();
     generateFunMessage();
   }
 
@@ -2037,6 +2301,143 @@
     if (!dateStr) return '';
     const [y,m,d] = dateStr.split('-');
     return `${d}/${m}`;
+  }
+
+  function generateAdvancedAnalysis() {
+    if (currentUserExpenses.length === 0) {
+      document.getElementById('analysisCard').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('analysisCard').style.display = 'block';
+
+    const now = new Date();
+    const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+    // SECCIÓN 1: Top 3 Categorías
+    const catMap = {};
+    currentUserExpenses.forEach(e => {
+      catMap[e.cat] = (catMap[e.cat] || 0) + e.amount;
+    });
+
+    const sortedCats = Object.entries(catMap)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3);
+
+    const totalSpent = Object.values(catMap).reduce((a, b) => a + b, 0);
+    const budget = currentUser.budget;
+
+    let topCatsHTML = sortedCats.map(([ cat, amount ], idx) => {
+      const percent = ((amount / budget) * 100).toFixed(1);
+      const ranks = ['🥇', '🥈', '🥉'];
+      return `
+        <div class="top-cat-item">
+          <span class="top-cat-rank">${ranks[idx]}</span>
+          <span class="top-cat-name">${cat.substring(2)}</span>
+          <span class="top-cat-percent">${percent}% (${amount.toFixed(2)}€)</span>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('topCategoriesContainer').innerHTML = topCatsHTML;
+
+    // SECCIÓN 2: Tendencias
+    const thisMonthExpenses = currentUserExpenses.filter(e => new Date(e.date) >= thisMonth);
+    const lastMonthExpenses = currentUserExpenses.filter(e => {
+      const d = new Date(e.date);
+      return d >= lastMonth && d <= endOfLastMonth;
+    });
+
+    const thisMonthTotal = thisMonthExpenses.reduce((s, e) => s + e.amount, 0);
+    const lastMonthTotal = lastMonthExpenses.reduce((s, e) => s + e.amount, 0);
+    const difference = thisMonthTotal - lastMonthTotal;
+    const percentChange = lastMonthTotal === 0 ? 0 : ((difference / lastMonthTotal) * 100).toFixed(1);
+
+    let trendsHTML = `
+      <div class="trend-item">
+        <span class="trend-label">Gasto este mes</span>
+        <span class="trend-value">${thisMonthTotal.toFixed(2)}€</span>
+      </div>
+      <div class="trend-item">
+        <span class="trend-label">Gasto mes anterior</span>
+        <span class="trend-value">${lastMonthTotal.toFixed(2)}€</span>
+      </div>
+      <div class="trend-item">
+        <span class="trend-label">Diferencia</span>
+        <span class="trend-value ${difference > 0 ? 'trend-negative' : 'trend-positive'}">
+          ${difference > 0 ? '+' : '-'}${Math.abs(difference).toFixed(2)}€ (${percentChange > 0 ? '+' : ''}${percentChange}%)
+        </span>
+      </div>
+    `;
+
+    document.getElementById('trendsContainer').innerHTML = trendsHTML;
+
+    // SECCIÓN 3: Gastos Recurrentes
+    const nameMap = {};
+    currentUserExpenses.forEach(e => {
+      nameMap[e.name] = (nameMap[e.name] || 0) + 1;
+    });
+
+    const recurring = Object.entries(nameMap)
+      .filter(([name, count]) => count >= 2)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+
+    let recurringHTML = '';
+    if (recurring.length === 0) {
+      recurringHTML = '<div style="color: var(--muted); font-size: 12px;">No hay gastos recurrentes detectados</div>';
+    } else {
+      recurringHTML = recurring.map(([name, count]) => `
+        <div class="recurring-item">
+          <span class="recurring-name">${name}</span>
+          <span class="recurring-count">${count}x</span>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('recurringContainer').innerHTML = recurringHTML;
+
+    // SECCIÓN 4: Insights
+    let insightsHTML = '';
+    const insights = [];
+
+    // Insight 1: Presupuesto
+    const usedPercent = (totalSpent / budget) * 100;
+    if (usedPercent > 90) {
+      insights.push('⚠️ <strong>Cuidado:</strong> Has usado más del 90% de tu presupuesto');
+    } else if (usedPercent > 75) {
+      insights.push('📌 <strong>Aviso:</strong> Has usado más del 75% de tu presupuesto');
+    } else if (usedPercent < 30) {
+      insights.push('✅ <strong>Excelente:</strong> Vas muy bien con tu presupuesto');
+    }
+
+    // Insight 2: Categoría dominante
+    if (sortedCats.length > 0) {
+      const topCat = sortedCats[0];
+      const topPercent = (topCat[1] / totalSpent) * 100;
+      if (topPercent > 40) {
+        insights.push(`🎯 <strong>${topCat[0].substring(2)}</strong> representa el ${topPercent.toFixed(0)}% de tus gastos`);
+      }
+    }
+
+    // Insight 3: Tendencia
+    if (difference > 0) {
+      insights.push(`📈 <strong>Tendencia al alza:</strong> Gastaste ${Math.abs(percentChange)}% más que el mes anterior`);
+    } else if (difference < 0) {
+      insights.push(`📉 <strong>Tendencia a la baja:</strong> Gastaste ${Math.abs(percentChange)}% menos que el mes anterior`);
+    }
+
+    // Insight 4: Gastos recurrentes
+    if (recurring.length > 0) {
+      const topRecurring = recurring[0];
+      insights.push(`🔄 <strong>${topRecurring[0]}</strong> aparece ${topRecurring[1]} veces - esto es un gasto recurrente`);
+    }
+
+    insightsHTML = insights.map(insight => `<div class="insight-item">${insight}</div>`).join('');
+
+    document.getElementById('insightsContainer').innerHTML = insightsHTML;
   }
 
   function generateFunMessage() {
@@ -2793,6 +3194,147 @@
 
     document.getElementById('comparisonTitle').textContent = 'Comparativa anual';
     document.getElementById('weeklyBarsContainer').innerHTML = comparisonHTML;
+  }
+
+  function exportToCSV() {
+    if (currentUserExpenses.length === 0 && currentUserIncomes.length === 0) {
+      showToast('⚠️ No hay datos para exportar');
+      return;
+    }
+
+    let csv = 'TIPO,CONCEPTO,MONTO,CATEGORÍA,FECHA,COMENTARIO\n';
+
+    // Agregar gastos
+    currentUserExpenses.forEach(e => {
+      const comment = e.comment ? `"${e.comment}"` : '';
+      csv += `GASTO,"${e.name}",${e.amount},"${e.cat}",${e.date},${comment}\n`;
+    });
+
+    // Agregar ingresos
+    currentUserIncomes.forEach(i => {
+      const comment = i.comment ? `"${i.comment}"` : '';
+      csv += `INGRESO,"${i.name}",${i.amount},"Ingreso",${i.date},${comment}\n`;
+    });
+
+    // Agregar resumen
+    csv += '\n--- RESUMEN ---\n';
+    const totalExpenses = currentUserExpenses.reduce((s, e) => s + e.amount, 0);
+    const totalIncomes = currentUserIncomes.reduce((s, i) => s + i.amount, 0);
+    csv += `TOTAL GASTOS,${totalExpenses}\n`;
+    csv += `TOTAL INGRESOS,${totalIncomes}\n`;
+    csv += `PRESUPUESTO INICIAL,${currentUser.budget}\n`;
+    csv += `DISPONIBLE,${(currentUser.budget + totalIncomes - totalExpenses)}\n`;
+
+    // Crear descarga
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+    element.setAttribute('download', `FinTeam_${currentUser.name}_${new Date().toISOString().slice(0, 10)}.csv`);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+
+    showToast('✅ CSV descargado correctamente');
+  }
+
+  function exportToPDF() {
+    if (currentUserExpenses.length === 0 && currentUserIncomes.length === 0) {
+      showToast('⚠️ No hay datos para exportar');
+      return;
+    }
+
+    try {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('es-ES');
+      
+      const totalExpenses = currentUserExpenses.reduce((s, e) => s + e.amount, 0);
+      const totalIncomes = currentUserIncomes.reduce((s, i) => s + i.amount, 0);
+      const remaining = currentUser.budget + totalIncomes - totalExpenses;
+
+      // Crear tabla de gastos
+      let gastosFila = '';
+      currentUserExpenses.forEach(e => {
+        gastosFila += '<tr>';
+        gastosFila += '<td>' + e.name + '</td>';
+        gastosFila += '<td>' + e.cat.substring(2) + '</td>';
+        gastosFila += '<td class="negative">' + e.amount.toFixed(2) + '€</td>';
+        gastosFila += '<td>' + e.date + '</td>';
+        gastosFila += '<td>' + (e.comment || '-') + '</td>';
+        gastosFila += '</tr>';
+      });
+
+      // Crear tabla de ingresos
+      let ingresosFila = '';
+      currentUserIncomes.forEach(i => {
+        ingresosFila += '<tr>';
+        ingresosFila += '<td>' + i.name + '</td>';
+        ingresosFila += '<td class="positive">' + i.amount.toFixed(2) + '€</td>';
+        ingresosFila += '<td>' + i.date + '</td>';
+        ingresosFila += '<td>' + (i.comment || '-') + '</td>';
+        ingresosFila += '</tr>';
+      });
+
+      const colorDisponible = remaining >= 0 ? '#00ff88' : '#ff4477';
+
+      let html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>';
+      html += 'body { font-family: Arial, sans-serif; margin: 20px; color: #333; }';
+      html += 'h1 { color: #00d9ff; text-align: center; margin-bottom: 5px; }';
+      html += '.date { text-align: center; color: #666; margin-bottom: 20px; }';
+      html += '.summary { background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; }';
+      html += '.summary-row { display: flex; justify-content: space-between; margin: 8px 0; font-weight: bold; }';
+      html += 'h2 { color: #00ff88; border-bottom: 2px solid #00d9ff; padding-bottom: 10px; margin-top: 20px; }';
+      html += 'table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }';
+      html += 'th { background: #f5f5f5; padding: 10px; text-align: left; border-bottom: 2px solid #ddd; }';
+      html += 'td { padding: 8px; border-bottom: 1px solid #ddd; }';
+      html += '.positive { color: #00ff88; }';
+      html += '.negative { color: #ff4477; }';
+      html += '.footer { text-align: center; color: #999; margin-top: 30px; font-size: 12px; }';
+      html += '</style></head><body>';
+      html += '<h1>📊 Reporte FinTeam</h1>';
+      html += '<div class="date">Generado el ' + dateStr + '</div>';
+      html += '<div class="date"><strong>Usuario:</strong> ' + currentUser.name + '</div>';
+      html += '<div class="summary">';
+      html += '<div class="summary-row"><span>Presupuesto Inicial:</span><span>' + currentUser.budget.toFixed(2) + '€</span></div>';
+      html += '<div class="summary-row"><span>Total Ingresos:</span><span class="positive">+' + totalIncomes.toFixed(2) + '€</span></div>';
+      html += '<div class="summary-row"><span>Total Gastos:</span><span class="negative">-' + totalExpenses.toFixed(2) + '€</span></div>';
+      html += '<div class="summary-row" style="border-top: 2px solid #ddd; padding-top: 10px; margin-top: 10px;"><span><strong>Disponible:</strong></span><span style="color: ' + colorDisponible + ';"><strong>' + remaining.toFixed(2) + '€</strong></span></div>';
+      html += '</div>';
+      
+      html += '<h2>💸 Gastos Registrados (' + currentUserExpenses.length + ')</h2>';
+      if (currentUserExpenses.length > 0) {
+        html += '<table><tr><th>Concepto</th><th>Categoría</th><th>Monto</th><th>Fecha</th><th>Comentario</th></tr>';
+        html += gastosFila;
+        html += '</table>';
+      } else {
+        html += '<p>Sin gastos registrados</p>';
+      }
+
+      html += '<h2>💵 Ingresos Registrados (' + currentUserIncomes.length + ')</h2>';
+      if (currentUserIncomes.length > 0) {
+        html += '<table><tr><th>Concepto</th><th>Monto</th><th>Fecha</th><th>Comentario</th></tr>';
+        html += ingresosFila;
+        html += '</table>';
+      } else {
+        html += '<p>Sin ingresos registrados</p>';
+      }
+
+      html += '<div class="footer"><p>Este reporte fue generado automáticamente por FinTeam</p></div>';
+      html += '</body></html>';
+
+      // Crear ventana para imprimir/guardar como PDF
+      const printWindow = window.open('', '', 'height=600,width=800');
+      printWindow.document.write(html);
+      printWindow.document.close();
+      
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+
+      showToast('✅ PDF abierto - Guarda como PDF desde tu navegador');
+    } catch (error) {
+      console.error('Error al exportar PDF:', error);
+      showToast('❌ Error al exportar PDF');
+    }
   }
 
   function showToast(msg) {
