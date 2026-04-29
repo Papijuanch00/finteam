@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinTeam — Rastreador de Gastos Compartido</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <style>
   :root {
@@ -15,8 +15,8 @@
     --accent: #00d9ff;
     --accent2: #00ff88;
     --accent3: #ff4477;
-    --text: #e8eef5;
-    --muted: #6b7a96;
+    --text: #f0f5ff;
+    --muted: #8a96a6;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,7 +24,11 @@
   body {
     background: linear-gradient(135deg, var(--bg) 0%, #0f1220 100%);
     color: var(--text);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
     min-height: 100vh;
     padding: 24px 16px 80px;
   }
@@ -61,9 +65,9 @@
   .login-logo .icon { font-size: 48px; margin-bottom: 16px; }
 
   .login-logo h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -1px;
     margin-bottom: 4px;
   }
@@ -100,7 +104,7 @@
     border-radius: 10px;
     padding: 12px;
     color: var(--text);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     outline: none;
     transition: all 0.3s;
@@ -118,9 +122,9 @@
     color: var(--bg);
     border: none;
     border-radius: 10px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s;
@@ -171,10 +175,10 @@
   }
 
   .header-left h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -1px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
     margin-bottom: 4px;
   }
 
@@ -211,7 +215,7 @@
     align-items: center;
     justify-content: center;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .btn-logout {
@@ -220,7 +224,7 @@
     border-radius: 8px;
     padding: 8px 12px;
     color: var(--muted);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 10px;
     letter-spacing: 1px;
     cursor: pointer;
@@ -258,17 +262,19 @@
   }
 
   .balance-item .bal-label {
-    font-size: 10px;
-    letter-spacing: 2px;
+    font-size: 11px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    font-weight: 500;
   }
 
   .balance-item .bal-value {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
   }
 
   .bal-value.budget { color: var(--accent); }
@@ -346,14 +352,21 @@
 
   .fun-text strong {
     color: var(--accent2);
+    font-weight: 600;
   }
 
   .fun-message-card.warning .fun-text strong {
     color: var(--accent3);
+    font-weight: 600;
   }
 
   .fun-message-card.celebration .fun-text strong {
     color: #ffaa00;
+    font-weight: 600;
+  }
+
+  strong {
+    font-weight: 600;
   }
 
   @keyframes slideIn {
@@ -377,11 +390,44 @@
   }
 
   .form-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 20px;
     color: var(--accent);
+  }
+
+  .form-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .form-tab {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-tab:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .form-tab.active {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-color: var(--accent);
+    color: var(--bg);
   }
 
   .form-grid {
@@ -402,10 +448,11 @@
   }
 
   .form-group label {
-    font-size: 10px;
-    letter-spacing: 1px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     color: var(--muted);
+    font-weight: 500;
   }
 
   .form-group input,
@@ -416,7 +463,7 @@
     border-radius: 8px;
     padding: 10px;
     color: var(--text);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     outline: none;
     transition: all 0.3s;
@@ -441,9 +488,9 @@
     color: var(--bg);
     border: none;
     border-radius: 8px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s;
@@ -474,9 +521,9 @@
   }
 
   .chart-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 20px;
     color: var(--accent);
   }
@@ -502,9 +549,9 @@
   }
 
   .cats-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 16px;
     color: var(--accent);
   }
@@ -553,9 +600,9 @@
   }
 
   .cat-amount {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent);
   }
 
@@ -575,9 +622,9 @@
   }
 
   .list-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent);
   }
 
@@ -638,9 +685,9 @@
   }
 
   .exp-amount {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent3);
   }
 
@@ -691,6 +738,71 @@
     background: rgba(0, 217, 255, 0.15);
     border-radius: 8px;
     border-left: 3px solid var(--accent);
+  }
+
+  /* INCOME ITEMS */
+  .income-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .income-item:last-child {
+    border-bottom: none;
+  }
+
+  .income-item:hover {
+    background: rgba(0, 255, 136, 0.05);
+    border-radius: 8px;
+    padding: 12px 8px;
+    cursor: pointer;
+  }
+
+  .inc-icon {
+    font-size: 20px;
+    min-width: 24px;
+  }
+
+  .inc-info {
+    flex: 1;
+  }
+
+  .inc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .inc-name {
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .inc-amount {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent2);
+  }
+
+  .inc-meta {
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .inc-comment {
+    color: var(--muted);
+  }
+
+  .inc-date {
+    color: var(--muted);
   }
 
   .empty-state {
@@ -759,9 +871,9 @@
   }
 
   .modal-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 20px;
     color: var(--accent);
   }
@@ -777,9 +889,9 @@
     padding: 12px;
     border: none;
     border-radius: 8px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     text-transform: uppercase;
     transition: all 0.3s;
@@ -852,9 +964,9 @@
   }
 
   .daily-weekly-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 20px;
     color: var(--accent);
   }
@@ -872,7 +984,7 @@
     color: var(--text);
     padding: 10px 16px;
     border-radius: 8px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -917,9 +1029,9 @@
   }
 
   .summary-value {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent);
   }
 
@@ -1015,7 +1127,7 @@
       </div>
       <div class="form-group">
         <label>Presupuesto (€)</label>
-        <input type="number" id="loginBudget" placeholder="300-2000" min="300" max="2000" value="540">
+        <input type="number" id="loginBudget" placeholder="300-100000" min="300" max="100000" value="540">
       </div>
       <button class="btn-login" onclick="login()">Entrar</button>
       <div class="login-error" id="loginError"></div>
@@ -1074,16 +1186,23 @@
   <!-- FORM -->
   <div class="form-card">
     <div class="form-title" id="formTitle">+ Nuevo gasto</div>
+    
+    <!-- Tabs para Gasto/Ingreso -->
+    <div class="form-tabs">
+      <button class="form-tab active" onclick="switchFormMode('expense')">💸 Gasto</button>
+      <button class="form-tab" onclick="switchFormMode('income')">💵 Ingreso</button>
+    </div>
+
     <div class="form-grid">
       <div class="form-group">
         <label>Concepto</label>
         <input type="text" id="inputName" placeholder="ej. Café" maxlength="30">
       </div>
       <div class="form-group">
-        <label>Importe (€)</label>
+        <label id="amountLabel">Importe (€)</label>
         <input type="number" id="inputAmount" placeholder="0.00" min="0" step="0.01">
       </div>
-      <div class="form-group">
+      <div class="form-group" id="categoryGroup">
         <label>Categoría</label>
         <select id="inputCat">
           <option value="🛒 Mercado">🛒 Mercado</option>
@@ -1091,13 +1210,48 @@
           <option value="🚇 Transporte">🚇 Transporte</option>
           <option value="💊 Salud">💊 Salud</option>
           <option value="💪 Gym / Deporte">💪 Gym / Deporte</option>
-          <option value="🎬 Ocio">🎬 Ocio</option>
+          
+          <optgroup label="🎬 OCIO">
+            <option value="🎬 Ocio - General">🎬 General</option>
+            <option value="🍺 Ocio - Beber afuera">🍺 Beber afuera</option>
+            <option value="🚬 Ocio - Cigarros/Vaper">🚬 Cigarros/Vaper</option>
+            <option value="🎪 Ocio - Discotecas/Bares">🎪 Discotecas/Bares</option>
+            <option value="🎮 Ocio - Videojuegos">🎮 Videojuegos</option>
+            <option value="🎬 Ocio - Cine/Streaming">🎬 Cine/Streaming</option>
+            <option value="🎸 Ocio - Conciertos/Eventos">🎸 Conciertos/Eventos</option>
+          </optgroup>
+
           <option value="👗 Ropa">👗 Ropa</option>
           <option value="📱 Tecnología">📱 Tecnología</option>
-          <option value="🏠 Hogar">🏠 Hogar</option>
+          
+          <optgroup label="🏠 HOGAR">
+            <option value="🏠 Hogar - Alquiler">🏠 Alquiler</option>
+            <option value="⚡ Hogar - Luz">⚡ Luz</option>
+            <option value="💧 Hogar - Agua">💧 Agua</option>
+            <option value="🧹 Hogar - Limpieza">🧹 Limpieza</option>
+            <option value="📡 Hogar - Internet">📡 Internet</option>
+            <option value="🔧 Hogar - Mantenimiento">🔧 Mantenimiento</option>
+            <option value="🏠 Hogar - General">🏠 General</option>
+          </optgroup>
+
+          <optgroup label="👶 HIJOS">
+            <option value="🎒 Hijos - Colegio">🎒 Colegio</option>
+            <option value="👶 Hijos - Guardería">👶 Guardería</option>
+            <option value="🍼 Hijos - Pañales/Fórmula">🍼 Pañales/Fórmula</option>
+            <option value="🧸 Hijos - Ropa/Juguetes">🧸 Ropa/Juguetes</option>
+            <option value="📚 Hijos - Material escolar">📚 Material escolar</option>
+            <option value="👶 Hijos - General">👶 General</option>
+          </optgroup>
+
           <option value="💳 Deuda / Préstamo">💳 Deuda / Préstamo</option>
           <option value="🎁 Regalo">🎁 Regalo</option>
           <option value="✈️ Viaje">✈️ Viaje</option>
+          
+          <optgroup label="💰 FINANCIERO">
+            <option value="💰 Ahorros">💰 Ahorros</option>
+            <option value="📈 Inversiones">📈 Inversiones</option>
+          </optgroup>
+          
           <option value="📦 Otro">📦 Otro</option>
         </select>
       </div>
@@ -1110,7 +1264,7 @@
         <textarea id="inputComment" placeholder="¿De qué era este gasto?"></textarea>
       </div>
     </div>
-    <button class="btn-add" id="btnSubmit" onclick="addExpense()">Añadir gasto</button>
+    <button class="btn-add" id="btnSubmit" onclick="handleFormSubmit()">Añadir gasto</button>
     <button class="btn-add" id="btnCancel" onclick="cancelEdit()" style="display:none; background: var(--surface2); border: 1px solid var(--accent3); color: var(--accent3); margin-top: 8px;">Cancelar edición</button>
   </div>
 
@@ -1137,6 +1291,7 @@
       <button class="period-btn active" onclick="updateDailyWeeklyView('daily')">Diario</button>
       <button class="period-btn" onclick="updateDailyWeeklyView('weekly')">Semanal</button>
       <button class="period-btn" onclick="updateDailyWeeklyView('monthly')">Mensual</button>
+      <button class="period-btn" onclick="updateDailyWeeklyView('annual')">Anual</button>
     </div>
     
     <!-- Tarjetas de resumen -->
@@ -1175,16 +1330,30 @@
     <button class="filter-btn" onclick="filterExpenses('30days')">Este mes</button>
   </div>
 
-  <!-- LISTA -->
+  <!-- LISTA DE GASTOS -->
   <div class="list-card">
     <div class="list-header">
-      <div class="list-title">📋 Registro</div>
-      <button class="btn-clear" onclick="clearAll()">Borrar todo</button>
+      <div class="list-title">📋 Registro de Gastos</div>
+      <button class="btn-clear" onclick="clearAllExpenses()">Borrar gastos</button>
     </div>
     <div id="expensesList">
       <div class="empty-state">
         <div class="empty-icon">📭</div>
         <div>Aún no hay gastos registrados.<br>¡Añade tu primer gasto!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTA DE INGRESOS -->
+  <div class="list-card" id="incomeListCard" style="display:none;">
+    <div class="list-header">
+      <div class="list-title">💵 Registro de Ingresos</div>
+      <button class="btn-clear" onclick="clearAllIncomes()">Borrar ingresos</button>
+    </div>
+    <div id="incomesList">
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <div>Aún no hay ingresos registrados.<br>¡Añade tu primer ingreso!</div>
       </div>
     </div>
   </div>
@@ -1212,13 +1381,48 @@
           <option value="🚇 Transporte">🚇 Transporte</option>
           <option value="💊 Salud">💊 Salud</option>
           <option value="💪 Gym / Deporte">💪 Gym / Deporte</option>
-          <option value="🎬 Ocio">🎬 Ocio</option>
+          
+          <optgroup label="🎬 OCIO">
+            <option value="🎬 Ocio - General">🎬 General</option>
+            <option value="🍺 Ocio - Beber afuera">🍺 Beber afuera</option>
+            <option value="🚬 Ocio - Cigarros/Vaper">🚬 Cigarros/Vaper</option>
+            <option value="🎪 Ocio - Discotecas/Bares">🎪 Discotecas/Bares</option>
+            <option value="🎮 Ocio - Videojuegos">🎮 Videojuegos</option>
+            <option value="🎬 Ocio - Cine/Streaming">🎬 Cine/Streaming</option>
+            <option value="🎸 Ocio - Conciertos/Eventos">🎸 Conciertos/Eventos</option>
+          </optgroup>
+
           <option value="👗 Ropa">👗 Ropa</option>
           <option value="📱 Tecnología">📱 Tecnología</option>
-          <option value="🏠 Hogar">🏠 Hogar</option>
+          
+          <optgroup label="🏠 HOGAR">
+            <option value="🏠 Hogar - Alquiler">🏠 Alquiler</option>
+            <option value="⚡ Hogar - Luz">⚡ Luz</option>
+            <option value="💧 Hogar - Agua">💧 Agua</option>
+            <option value="🧹 Hogar - Limpieza">🧹 Limpieza</option>
+            <option value="📡 Hogar - Internet">📡 Internet</option>
+            <option value="🔧 Hogar - Mantenimiento">🔧 Mantenimiento</option>
+            <option value="🏠 Hogar - General">🏠 General</option>
+          </optgroup>
+
+          <optgroup label="👶 HIJOS">
+            <option value="🎒 Hijos - Colegio">🎒 Colegio</option>
+            <option value="👶 Hijos - Guardería">👶 Guardería</option>
+            <option value="🍼 Hijos - Pañales/Fórmula">🍼 Pañales/Fórmula</option>
+            <option value="🧸 Hijos - Ropa/Juguetes">🧸 Ropa/Juguetes</option>
+            <option value="📚 Hijos - Material escolar">📚 Material escolar</option>
+            <option value="👶 Hijos - General">👶 General</option>
+          </optgroup>
+
           <option value="💳 Deuda / Préstamo">💳 Deuda / Préstamo</option>
           <option value="🎁 Regalo">🎁 Regalo</option>
           <option value="✈️ Viaje">✈️ Viaje</option>
+          
+          <optgroup label="💰 FINANCIERO">
+            <option value="💰 Ahorros">💰 Ahorros</option>
+            <option value="📈 Inversiones">📈 Inversiones</option>
+          </optgroup>
+          
           <option value="📦 Otro">📦 Otro</option>
         </select>
       </div>
@@ -1247,17 +1451,60 @@
   let currentUser = null;
   let allUsers = JSON.parse(localStorage.getItem('finteam_users') || '{}');
   let currentUserExpenses = [];
+  let currentUserIncomes = [];
   let filteredExpenses = [];
   let chart = null;
   let editingId = null;
+  let editingType = null;
   let currentFilter = 'all';
   let selectedCategory = null;
   let currentDailyWeeklyView = 'daily';
+  let formMode = 'expense';
 
   document.getElementById('inputDate').valueAsDate = new Date();
 
   function getCatIcon(cat) {
     return cat.split(' ')[0];
+  }
+
+  function handleFormSubmit() {
+    if (formMode === 'expense') {
+      addExpense();
+    } else {
+      addIncome();
+    }
+  }
+
+  function switchFormMode(mode) {
+    formMode = mode;
+    const tabs = document.querySelectorAll('.form-tab');
+    tabs.forEach(tab => {
+      tab.classList.remove('active');
+      if (tab.textContent.includes('Gasto') && mode === 'expense') {
+        tab.classList.add('active');
+      } else if (tab.textContent.includes('Ingreso') && mode === 'income') {
+        tab.classList.add('active');
+      }
+    });
+
+    const categoryGroup = document.getElementById('categoryGroup');
+    const amountLabel = document.getElementById('amountLabel');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const formTitle = document.getElementById('formTitle');
+
+    if (mode === 'expense') {
+      if (categoryGroup) categoryGroup.style.display = 'block';
+      if (amountLabel) amountLabel.textContent = 'Importe (€)';
+      if (btnSubmit) btnSubmit.textContent = 'Añadir gasto';
+      if (formTitle) formTitle.textContent = '+ Nuevo gasto';
+    } else {
+      if (categoryGroup) categoryGroup.style.display = 'none';
+      if (amountLabel) amountLabel.textContent = 'Monto (€)';
+      if (btnSubmit) btnSubmit.textContent = 'Añadir ingreso';
+      if (formTitle) formTitle.textContent = '+ Nuevo ingreso';
+    }
+
+    clearForm();
   }
 
   function login() {
@@ -1271,8 +1518,8 @@
       return;
     }
 
-    if (isNaN(budget) || budget < 300 || budget > 2000) {
-      error.textContent = '❌ Presupuesto entre 300€ y 2000€';
+    if (isNaN(budget) || budget < 300 || budget > 100000) {
+      error.textContent = '❌ Presupuesto entre 300€ y 100.000€';
       error.classList.add('show');
       return;
     }
@@ -1280,7 +1527,7 @@
     error.classList.remove('show');
 
     if (!allUsers[name]) {
-      allUsers[name] = { budget, expenses: [] };
+      allUsers[name] = { budget, expenses: [], incomes: [] };
     }
 
     currentUser = {
@@ -1290,6 +1537,7 @@
     };
 
     currentUserExpenses = currentUser.expenses;
+    currentUserIncomes = allUsers[name].incomes || [];
     filteredExpenses = currentUserExpenses;
 
     document.getElementById('loginScreen').classList.add('hidden');
@@ -1305,10 +1553,12 @@
 
   function logout() {
     allUsers[currentUser.name].expenses = currentUserExpenses;
+    allUsers[currentUser.name].incomes = currentUserIncomes;
     localStorage.setItem('finteam_users', JSON.stringify(allUsers));
 
     currentUser = null;
     currentUserExpenses = [];
+    currentUserIncomes = [];
     selectedCategory = null;
 
     document.getElementById('loginScreen').classList.remove('hidden');
@@ -1356,6 +1606,39 @@
     clearForm();
   }
 
+  function addIncome() {
+    const name = document.getElementById('inputName').value.trim();
+    const amount = parseFloat(document.getElementById('inputAmount').value);
+    const date = document.getElementById('inputDate').value;
+    const comment = document.getElementById('inputComment').value.trim();
+
+    if (!name || isNaN(amount) || amount <= 0) {
+      showToast('⚠️ Pon un concepto e importe válido');
+      return;
+    }
+
+    if (editingId !== null && editingType === 'income') {
+      const index = currentUserIncomes.findIndex(e => e.id === editingId);
+      if (index !== -1) {
+        currentUserIncomes[index] = { id: editingId, name, amount, date, comment };
+        showToast('✏️ Ingreso actualizado correctamente');
+        editingId = null;
+        editingType = null;
+      }
+    } else {
+      const income = {
+        id: Date.now(),
+        name, amount, date, comment
+      };
+      currentUserIncomes.unshift(income);
+      showToast('✅ Ingreso añadido correctamente');
+    }
+
+    save();
+    render();
+    clearForm();
+  }
+
   function deleteExpense(id) {
     if (confirm('¿Eliminar este gasto?')) {
       currentUserExpenses = currentUserExpenses.filter(e => e.id !== id);
@@ -1394,15 +1677,80 @@
     showToast('✏️ Editando gasto - Realiza cambios y guarda');
   }
 
+  function deleteIncome(id) {
+    if (confirm('¿Eliminar este ingreso?')) {
+      currentUserIncomes = currentUserIncomes.filter(i => i.id !== id);
+      save();
+      render();
+      showToast('🗑️ Ingreso eliminado');
+    }
+  }
+
+  function editIncome(id) {
+    const income = currentUserIncomes.find(i => i.id === id);
+    if (!income) return;
+
+    editingId = id;
+    editingType = 'income';
+    document.getElementById('inputName').value = income.name;
+    document.getElementById('inputAmount').value = income.amount;
+    document.getElementById('inputDate').value = income.date;
+    document.getElementById('inputComment').value = income.comment;
+    document.getElementById('formTitle').textContent = '✏️ Editar ingreso';
+    document.getElementById('btnSubmit').textContent = 'Guardar ingreso';
+    document.getElementById('btnSubmit').classList.add('edit');
+    document.getElementById('btnCancel').style.display = 'block';
+
+    // Cambiar a tab de ingreso
+    switchFormMode('income');
+
+    // Marcar el elemento en la lista como editando
+    document.querySelectorAll('.income-item').forEach(item => item.classList.remove('editing'));
+    const items = document.querySelectorAll('.income-item');
+    items.forEach(item => {
+      if (item.getAttribute('data-id') === String(id)) {
+        item.classList.add('editing');
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('inputName').focus();
+    showToast('✏️ Editando ingreso - Realiza cambios y guarda');
+  }
+
   function cancelEdit() {
     editingId = null;
+    editingType = null;
     document.getElementById('formTitle').textContent = '+ Nuevo gasto';
     document.getElementById('btnSubmit').textContent = 'Añadir gasto';
     document.getElementById('btnSubmit').classList.remove('edit');
     document.getElementById('btnCancel').style.display = 'none';
     document.querySelectorAll('.expense-item').forEach(item => item.classList.remove('editing'));
+    document.querySelectorAll('.income-item').forEach(item => item.classList.remove('editing'));
+    switchFormMode('expense');
     clearForm();
     showToast('❌ Edición cancelada');
+  }
+
+  function clearAllExpenses() {
+    if (currentUserExpenses.length === 0) return;
+    if (confirm('¿Borrar todos tus gastos?')) {
+      currentUserExpenses = [];
+      filteredExpenses = [];
+      save();
+      render();
+      showToast('🗑️ Todos los gastos eliminados');
+    }
+  }
+
+  function clearAllIncomes() {
+    if (currentUserIncomes.length === 0) return;
+    if (confirm('¿Borrar todos tus ingresos?')) {
+      currentUserIncomes = [];
+      save();
+      render();
+      showToast('🗑️ Todos los ingresos eliminados');
+    }
   }
 
   function clearAll() {
@@ -1429,6 +1777,7 @@
 
   function save() {
     allUsers[currentUser.name].expenses = currentUserExpenses;
+    allUsers[currentUser.name].incomes = currentUserIncomes;
     localStorage.setItem('finteam_users', JSON.stringify(allUsers));
   }
 
@@ -1478,7 +1827,8 @@
 
   function render() {
     const total = currentUserExpenses.reduce((s, e) => s + e.amount, 0);
-    const budget = currentUser.budget;
+    const incomeTotal = currentUserIncomes.reduce((s, i) => s + i.amount, 0);
+    const budget = currentUser.budget + incomeTotal;
     const remaining = budget - total;
     const pct = Math.min((total / budget) * 100, 100);
 
@@ -1528,6 +1878,7 @@
 
     filteredExpenses = currentUserExpenses;
     renderList();
+    renderIncomeList();
     updateChart();
     updateDailyWeekly();
     generateFunMessage();
@@ -1577,6 +1928,36 @@
           </div>
           <div class="btn-actions" onclick="event.stopPropagation()">
             <button class="btn-del" onclick="deleteExpense(${e.id})">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function renderIncomeList() {
+    const incomeListCard = document.getElementById('incomeListCard');
+    const incomesList = document.getElementById('incomesList');
+
+    if (currentUserIncomes.length === 0) {
+      incomeListCard.style.display = 'none';
+      incomesList.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div>No hay ingresos registrados.<br>¡Añade tu primer ingreso!</div></div>`;
+    } else {
+      incomeListCard.style.display = 'block';
+      incomesList.innerHTML = currentUserIncomes.map(i => `
+        <div class="income-item" data-id="${i.id}" onclick="editIncome(${i.id})">
+          <div class="inc-icon">💵</div>
+          <div class="inc-info">
+            <div class="inc-top">
+              <div class="inc-name">${i.name}</div>
+              <div class="inc-amount">+${i.amount.toFixed(2)}€</div>
+            </div>
+            <div class="inc-meta">
+              ${i.comment ? `<span class="inc-comment">${i.comment}</span>` : ''}
+              <span class="inc-date">${formatDate(i.date)}</span>
+            </div>
+          </div>
+          <div class="btn-actions" onclick="event.stopPropagation()">
+            <button class="btn-del" onclick="deleteIncome(${i.id})">✕</button>
           </div>
         </div>
       `).join('');
@@ -1677,12 +2058,13 @@
 
     // Mensajes por categoría con gastos altos
     const categoryMessages = {
-      '🎬 Ocio': {
-        icon: '🎭',
+      // CATEGORÍAS PRINCIPALES
+      '🛒 Mercado': {
+        icon: '🛍️',
         messages: [
-          'Wow, ¡te <strong>encanta la diversión</strong>! 🎉',
-          '¡Vaya! Parece que <strong>necesitas entretenimiento</strong> urgentemente 😄',
-          '<strong>¡Hollywood te ha llamado!</strong> Gastos en ocio detectados 🎬'
+          'Parece que <strong>eres un comprador compulsivo</strong> 🛒',
+          '¡El mercado <strong>te adora</strong>! Visitas frecuentes detectadas 📦',
+          '<strong>¡Récord de compras!</strong> El supermercado te considera VIP 👑'
         ]
       },
       '🍔 Comida fuera': {
@@ -1691,14 +2073,6 @@
           '¡Wow! <strong>Te encanta comer fuera</strong> 🍔',
           'Chef reconocido: ¡<strong>comes fuera constantemente</strong>! 👨‍🍳',
           '<strong>Inflación alimentaria detectada</strong> en tu perfil 💸'
-        ]
-      },
-      '🛒 Mercado': {
-        icon: '🛍️',
-        messages: [
-          'Parece que <strong>eres un comprador compulsivo</strong> 🛒',
-          '¡El mercado <strong>te adora</strong>! Visitas frecuentes detectadas 📦',
-          '<strong>¡Récord de compras!</strong> El supermercado te considera VIP 👑'
         ]
       },
       '👗 Ropa': {
@@ -1717,12 +2091,12 @@
           '<strong>¡Eres un ganador fitness!</strong> Ese presupuesto lo demuestra 🥇'
         ]
       },
-      '✈️ Viaje': {
-        icon: '🌍',
+      '📱 Tecnología': {
+        icon: '🤖',
         messages: [
-          '¡<strong>Nómada digital detectado</strong>! Eres un viajero 🗺️',
-          '<strong>El mundo es tuyo</strong> con estos gastos en viajes 🧳',
-          '¡<strong>Pasaporte lleno</strong> de aventuras! 🌴'
+          '<strong>¡Tech-lover</strong> en la zona! 📱',
+          '¡Vaya! <strong>Eres un entusiasta de la tecnología</strong> 🔌',
+          '<strong>El futuro es tuyo</strong> con estos gastos tech 🚀'
         ]
       },
       '🎁 Regalo': {
@@ -1733,12 +2107,200 @@
           '¡<strong>Corazón de oro</strong> detectado! Regalos a mansalva 💝'
         ]
       },
-      '📱 Tecnología': {
-        icon: '🤖',
+      '✈️ Viaje': {
+        icon: '🌍',
         messages: [
-          '<strong>¡Tech-lover</strong> en la zona! 📱',
-          '¡Vaya! <strong>Eres un entusiasta de la tecnología</strong> 🔌',
-          '<strong>El futuro es tuyo</strong> con estos gastos tech 🚀'
+          '¡<strong>Nómada digital detectado</strong>! Eres un viajero 🗺️',
+          '<strong>El mundo es tuyo</strong> con estos gastos en viajes 🧳',
+          '¡<strong>Pasaporte lleno</strong> de aventuras! 🌴'
+        ]
+      },
+
+      // SUBCATEGORÍAS OCIO
+      '🎬 Ocio - General': {
+        icon: '🎭',
+        messages: [
+          'Wow, ¡te <strong>encanta la diversión</strong>! 🎉',
+          '¡Vaya! Parece que <strong>necesitas entretenimiento</strong> urgentemente 😄',
+          '<strong>¡Hollywood te ha llamado!</strong> Gastos en ocio detectados 🎬'
+        ]
+      },
+      '🍺 Ocio - Beber afuera': {
+        icon: '🍺',
+        messages: [
+          '<strong>¡Vaya de fiesta!</strong> Gastos en bares detectados 🍻',
+          'Parece que <strong>eres un asiduo de los bares</strong> 🎉',
+          '<strong>¡El bartender te adora!</strong> Presencia frecuente confirmada 🥂'
+        ]
+      },
+      '🚬 Ocio - Cigarros/Vaper': {
+        icon: '🚬',
+        messages: [
+          '<strong>Humo visible</strong> en tu presupuesto 💨',
+          '¡Gastos en cigarros/vaper detectados! <strong>Quizás es hora de replantearse</strong> 🚭',
+          '<strong>Nube de gastos</strong> alrededor de esta categoría ☁️'
+        ]
+      },
+      '🎪 Ocio - Discotecas/Bares': {
+        icon: '🎪',
+        messages: [
+          '¡<strong>Vida nocturna intensa</strong>! Discotecas visitadas 🌃',
+          '<strong>DJ, aquí viene mi mejor cliente</strong> 🎧',
+          '¡<strong>Luces de neón</strong> en tu presupuesto! 💡'
+        ]
+      },
+      '🎮 Ocio - Videojuegos': {
+        icon: '🎮',
+        messages: [
+          '<strong>Jugador nivel experto</strong> confirmado! 🎮',
+          '¡Vaya! <strong>Eres un gamer</strong> de verdad 👾',
+          '<strong>Consola + Juegos</strong> = Tu presupuesto 🕹️'
+        ]
+      },
+      '🎬 Ocio - Cine/Streaming': {
+        icon: '🎬',
+        messages: [
+          'Cinéfilo detectado! <strong>Tus gastos en películas son épicos</strong> 🎬',
+          '<strong>Netflix + Cine</strong> = Tu estilo de vida 📺',
+          '¡<strong>Crítica de cine</strong> en potencia! 🍿'
+        ]
+      },
+      '🎸 Ocio - Conciertos/Eventos': {
+        icon: '🎸',
+        messages: [
+          '<strong>¡Rockero de corazón!</strong> Conciertos a mansalva 🎸',
+          '<strong>VIP en eventos</strong> confirmado 🎤',
+          '¡<strong>Entradas</strong> coleccionadas en tu presupuesto! 🎟️'
+        ]
+      },
+
+      // SUBCATEGORÍAS HOGAR
+      '🏠 Hogar - Alquiler': {
+        icon: '🏘️',
+        messages: [
+          '<strong>¡Inmobiliario en serio!</strong> Tu alquiler es una inversión 🏠',
+          'Casero sonríe: <strong>pago puntual detectado</strong> 😊',
+          '<strong>Casa bonita</strong> = Presupuesto comprometido 🏡'
+        ]
+      },
+      '⚡ Hogar - Luz': {
+        icon: '💡',
+        messages: [
+          '<strong>¡Hay luz!</strong> Tu factura lo confirma ⚡',
+          'Servicio eléctrico: <strong>tu mejor cliente encontrado</strong> 🔌',
+          '¡<strong>Luminoso</strong> tu gasto en electricidad! 💰'
+        ]
+      },
+      '💧 Hogar - Agua': {
+        icon: '💧',
+        messages: [
+          '<strong>¡Duchas largas</strong> confirmadas! 🚿',
+          'Compañía de agua: <strong>¡gracias por existir!</strong> 💧',
+          '<strong>Fluyente</strong> tu presupuesto en agua 💦'
+        ]
+      },
+      '🧹 Hogar - Limpieza': {
+        icon: '🧹',
+        messages: [
+          '<strong>Casa impecable</strong> = Presupuesto comprometido 🏠✨',
+          '¡<strong>Limpiador del mes</strong> contratado! 🧽',
+          '<strong>Desinfectante de lujo</strong> detectado en gastos 🧴'
+        ]
+      },
+      '📡 Hogar - Internet': {
+        icon: '📡',
+        messages: [
+          '<strong>¡Conexión de fibra óptica!</strong> Gastos internet altos 🌐',
+          'Proveedor: <strong>te adora como cliente</strong> 💻',
+          '<strong>Velocidad máxima</strong> = Presupuesto máximo ⚡'
+        ]
+      },
+      '🔧 Hogar - Mantenimiento': {
+        icon: '🔧',
+        messages: [
+          '<strong>¡Casa en mantenimiento constante!</strong> 🏠🔧',
+          'Reparador favorito: <strong>ya tiene tu número</strong> 📞',
+          '<strong>Arreglar todo</strong> es una ciencia cara 💸'
+        ]
+      },
+      '🏠 Hogar - General': {
+        icon: '🏘️',
+        messages: [
+          '<strong>¡Inversionista de hogar!</strong> Gastos serios 🏠',
+          '<strong>Casa = Prioridad</strong> en tu presupuesto',
+          '¡<strong>Lugar acogedor</strong> = Inversión comprometida! 🔑'
+        ]
+      },
+
+      // SUBCATEGORÍAS HIJOS
+      '🎒 Hijos - Colegio': {
+        icon: '🎒',
+        messages: [
+          '<strong>¡Educación de calidad!</strong> Gastos en colegio serios 📚',
+          'Profesor favorito: <strong>¿quién paga eso?</strong> 👨‍🏫',
+          '<strong>Futuro asegurado</strong> con esos gastos en educación 🏆'
+        ]
+      },
+      '👶 Hijos - Guardería': {
+        icon: '🍼',
+        messages: [
+          '<strong>¡Guardianes del presupuesto!</strong> Guardería cara 👶',
+          'Educadora: <strong>mejor amiga de tus gastos</strong> 👩‍🍼',
+          '<strong>Cuidado de calidad</strong> = Inversión seria 💕'
+        ]
+      },
+      '🍼 Hijos - Pañales/Fórmula': {
+        icon: '👶',
+        messages: [
+          '<strong>¡Pañales de marca premium!</strong> Presupuesto comprometido 👶',
+          'Bebé: <strong>¡tu mejor inversión!</strong> 💚',
+          '<strong>Fórmula de lujo</strong> para tu peque ✨'
+        ]
+      },
+      '🧸 Hijos - Ropa/Juguetes': {
+        icon: '🧸',
+        messages: [
+          '<strong>¡Juguetería ambulante!</strong> Presupuesto hijos fuerte 🎁',
+          'Armario infantil: <strong>más grande que el tuyo</strong> 👕',
+          '<strong>Niño feliz</strong> = Presupuesto feliz 😄'
+        ]
+      },
+      '📚 Hijos - Material escolar': {
+        icon: '✏️',
+        messages: [
+          '<strong>¡Papelería VIP!</strong> Gastos en material serios 📖',
+          'Librero: <strong>tu nuevo mejor amigo</strong> 📚',
+          '<strong>Educación completa</strong> = Presupuesto completo ✍️'
+        ]
+      },
+      '👶 Hijos - General': {
+        icon: '👶',
+        messages: [
+          '<strong>¡Paternidad es cara!</strong> Lo sabes muy bien 💙',
+          'Papá/Mamá: <strong>¡campeón del presupuesto!</strong> 👨‍👩‍👧',
+          '<strong>Hijos = Felicidad + Gastos</strong> ✨'
+        ]
+      },
+
+      // CATEGORÍAS FINANCIERO
+      '💰 Ahorros': {
+        icon: '🏦',
+        messages: [
+          '¡<strong>Experto en finanzas detectado!</strong> Ahorrador profesional 💰',
+          '<strong>Futuro asegurado</strong> con esos ahorros ¡bien hecho! 📈',
+          '¡<strong>Warren Buffet tiene competencia!</strong> Tus ahorros lo demuestran 💎',
+          '<strong>Eres el rey del dinero</strong> Ahorrador de élite 👑',
+          '¡<strong>Dinero que crece</strong> cada mes! Estratega financiero 🚀'
+        ]
+      },
+      '📈 Inversiones': {
+        icon: '📊',
+        messages: [
+          '<strong>¡Trader detectado!</strong> Tus inversiones son serias 📈',
+          '¡<strong>Millonario en ciernes!</strong> Inviertes como un pro 💼',
+          '<strong>Las matemáticas financieras</strong> son tu lenguaje 🧮',
+          '¡<strong>Diversificación de cartera!</strong> Stratega de inversiones 🎯',
+          '<strong>¡Dinero trabajando para ti!</strong> Brillante decisión de invertir 💡'
         ]
       }
     };
@@ -1820,6 +2382,8 @@
       renderWeeklyView(today);
     } else if (currentDailyWeeklyView === 'monthly') {
       renderMonthlyView(today);
+    } else if (currentDailyWeeklyView === 'annual') {
+      renderAnnualView(today);
     }
   }
 
@@ -2098,6 +2662,136 @@
     `;
 
     document.getElementById('comparisonTitle').textContent = 'Vs promedio mensual';
+    document.getElementById('weeklyBarsContainer').innerHTML = comparisonHTML;
+  }
+
+  function renderAnnualView(today) {
+    const twoYearsAgo = new Date(today);
+    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+
+    // Gasto últimos 12 meses
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    
+    const annualExpenses = currentUserExpenses.filter(e => new Date(e.date) >= oneYearAgo);
+    const annualIncomes = currentUserIncomes.filter(i => new Date(i.date) >= oneYearAgo);
+    
+    const annualExpenseTotal = annualExpenses.reduce((s, e) => s + e.amount, 0);
+    const annualIncomeTotal = annualIncomes.reduce((s, i) => s + i.amount, 0);
+    const netAnnual = annualIncomeTotal - annualExpenseTotal;
+
+    // Año anterior
+    const twoYearsAgoDate = new Date(today);
+    twoYearsAgoDate.setFullYear(twoYearsAgoDate.getFullYear() - 2);
+    const oneYearAgoFromTwoYears = new Date(twoYearsAgoDate);
+    oneYearAgoFromTwoYears.setFullYear(oneYearAgoFromTwoYears.getFullYear() + 1);
+    
+    const previousYearExpenses = currentUserExpenses.filter(e => {
+      const d = new Date(e.date);
+      return d >= twoYearsAgoDate && d < oneYearAgo;
+    });
+    const previousYearIncomes = currentUserIncomes.filter(i => {
+      const d = new Date(i.date);
+      return d >= twoYearsAgoDate && d < oneYearAgo;
+    });
+    
+    const previousExpenseTotal = previousYearExpenses.reduce((s, e) => s + e.amount, 0);
+    const previousIncomeTotal = previousYearIncomes.reduce((s, i) => s + i.amount, 0);
+    const previousNetAnnual = previousIncomeTotal - previousExpenseTotal;
+
+    // Mostrar resumen
+    document.getElementById('summaryLabel1').textContent = 'Ingresos año';
+    document.getElementById('summaryValue1').textContent = annualIncomeTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel2').textContent = 'Gastos año';
+    document.getElementById('summaryValue2').textContent = annualExpenseTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel3').textContent = 'Neto anual';
+    document.getElementById('summaryValue3').textContent = netAnnual.toFixed(2) + '€';
+
+    // Gráfico por mes del año actual
+    const monthMap = {};
+    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    
+    for (let i = 0; i < 12; i++) {
+      monthMap[monthNames[i]] = { expenses: 0, income: 0 };
+    }
+
+    annualExpenses.forEach(e => {
+      const d = new Date(e.date);
+      const monthName = monthNames[d.getMonth()];
+      monthMap[monthName].expenses += e.amount;
+    });
+
+    annualIncomes.forEach(i => {
+      const d = new Date(i.date);
+      const monthName = monthNames[d.getMonth()];
+      monthMap[monthName].income += i.amount;
+    });
+
+    const maxValue = Math.max(...Object.values(monthMap).map(m => Math.max(m.expenses, m.income)), 1);
+    
+    const monthlyBarsHTML = Object.entries(monthMap).map(([month, data]) => {
+      const netMonth = data.income - data.expenses;
+      const expensePercent = (data.expenses / maxValue) * 100;
+      const incomePercent = (data.income / maxValue) * 100;
+      
+      return `
+        <div class="bar-item">
+          <div class="bar-label">${month}</div>
+          <div class="bar-wrapper" style="position: relative;">
+            <div class="bar-fill" style="width:${expensePercent}%; background: #ff4477;">
+              ${data.expenses > 0 ? `<div class="bar-value" style="font-size: 10px;">-${data.expenses.toFixed(0)}€</div>` : ''}
+            </div>
+            <div class="bar-fill" style="width:${incomePercent}%; background: #00ff88; margin-left: 2px;">
+              ${data.income > 0 ? `<div class="bar-value" style="font-size: 10px;">+${data.income.toFixed(0)}€</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('barChartTitle').textContent = 'Gastos vs Ingresos mensuales (año actual)';
+    document.getElementById('dailyBarsContainer').innerHTML = monthlyBarsHTML;
+
+    // Comparativa año vs año
+    const maxComp = Math.max(annualExpenseTotal, previousExpenseTotal, 1);
+    const comparisonHTML = `
+      <div class="bar-item">
+        <div class="bar-label">Gastos año actual</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(annualExpenseTotal / maxComp) * 100}%; background: #ff4477;">
+            <div class="bar-value">${annualExpenseTotal.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">Gastos año anterior</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(previousExpenseTotal / maxComp) * 100}%; background: #ff6699;">
+            <div class="bar-value">${previousExpenseTotal.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+        <div class="bar-item">
+          <div class="bar-label">Neto año actual</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" style="width:${Math.abs(netAnnual) > 0 ? '100%' : '0%'}; background: ${netAnnual >= 0 ? '#00ff88' : '#ff4477'};">
+              <div class="bar-value">${netAnnual.toFixed(2)}€</div>
+            </div>
+          </div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label">Neto año anterior</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" style="width:${Math.abs(previousNetAnnual) > 0 ? '100%' : '0%'}; background: ${previousNetAnnual >= 0 ? '#00ff88' : '#ff6699'};">
+              <div class="bar-value">${previousNetAnnual.toFixed(2)}€</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('comparisonTitle').textContent = 'Comparativa anual';
     document.getElementById('weeklyBarsContainer').innerHTML = comparisonHTML;
   }
 
