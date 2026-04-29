@@ -1341,13 +1341,19 @@
 
     const labels = Object.keys(catMap).map(cat => cat.substring(2));
     const data = Object.values(catMap);
-    const fullCatNames = labels.map(label => catFullNames[label]);
 
     const ctx = document.getElementById('expenseChart');
     
     if (chart) {
       chart.data.labels = labels;
       chart.data.datasets[0].data = data;
+      chart.options.onClick = function(event, elements) {
+        if (elements.length > 0) {
+          const index = elements[0].index;
+          const categoryName = catFullNames[labels[index]];
+          filterByCategory(categoryName);
+        }
+      };
       chart.update();
     } else {
       chart = new Chart(ctx, {
@@ -1364,10 +1370,10 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          onClick: (event, elements) => {
+          onClick: function(event, elements) {
             if (elements.length > 0) {
               const index = elements[0].index;
-              const categoryName = fullCatNames[index];
+              const categoryName = catFullNames[labels[index]];
               filterByCategory(categoryName);
             }
           },
