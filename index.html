@@ -305,6 +305,68 @@
     background: linear-gradient(90deg, var(--accent3), #ff6699);
   }
 
+  /* FUN MESSAGE CARD */
+  .fun-message-card {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 217, 255, 0.15) 100%);
+    border: 1px solid var(--accent2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.4s ease-out;
+  }
+
+  .fun-message-card.show {
+    display: flex;
+  }
+
+  .fun-message-card.warning {
+    background: linear-gradient(135deg, rgba(255, 68, 119, 0.15) 0%, rgba(255, 136, 255, 0.15) 100%);
+    border-color: var(--accent3);
+  }
+
+  .fun-message-card.celebration {
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 136, 0, 0.15) 100%);
+    border-color: #ffaa00;
+  }
+
+  .fun-icon {
+    font-size: 28px;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .fun-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .fun-text strong {
+    color: var(--accent2);
+  }
+
+  .fun-message-card.warning .fun-text strong {
+    color: var(--accent3);
+  }
+
+  .fun-message-card.celebration .fun-text strong {
+    color: #ffaa00;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* FORM CARD */
   .form-card {
     background: var(--surface);
@@ -775,7 +837,148 @@
     background: rgba(0, 217, 255, 0.1);
   }
 
+  /* DAILY/WEEKLY CARD */
+  .daily-weekly-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .daily-weekly-card.show {
+    display: block;
+  }
+
+  .daily-weekly-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .period-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .period-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .period-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0, 217, 255, 0.1);
+  }
+
+  .period-btn.active {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .summary-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .summary-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .summary-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .daily-chart-title, .weekly-comparison-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+
+  .daily-bars, .weekly-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--text);
+    min-width: 45px;
+  }
+
+  .bar-wrapper {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 6px;
+    height: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 6px;
+    transition: width 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+
+  .bar-value {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--bg);
+  }
+
   @media (max-width: 640px) {
+    .summary-cards {
+      grid-template-columns: 1fr;
+    }
     .balance-row {
       grid-template-columns: 1fr;
     }
@@ -862,6 +1065,12 @@
     </div>
   </div>
 
+  <!-- MENSAJE DIVERTIDO -->
+  <div class="fun-message-card" id="funMessageCard">
+    <div class="fun-icon" id="funIcon">💬</div>
+    <div class="fun-text" id="funText"></div>
+  </div>
+
   <!-- FORM -->
   <div class="form-card">
     <div class="form-title" id="formTitle">+ Nuevo gasto</div>
@@ -917,6 +1126,46 @@
   <div class="cats-card" id="catsCard">
     <div class="cats-title">📈 Resumen por categoría</div>
     <div id="catsList"></div>
+  </div>
+
+  <!-- CONTROL DIARIO/SEMANAL -->
+  <div class="daily-weekly-card" id="dailyWeeklyCard">
+    <div class="daily-weekly-title">📅 Control de gastos</div>
+    
+    <!-- Botones de filtro -->
+    <div class="period-filter">
+      <button class="period-btn active" onclick="updateDailyWeeklyView('daily')">Diario</button>
+      <button class="period-btn" onclick="updateDailyWeeklyView('weekly')">Semanal</button>
+      <button class="period-btn" onclick="updateDailyWeeklyView('monthly')">Mensual</button>
+    </div>
+    
+    <!-- Tarjetas de resumen -->
+    <div class="summary-cards">
+      <div class="summary-item">
+        <div class="summary-label" id="summaryLabel1">Hoy</div>
+        <div class="summary-value" id="summaryValue1">0€</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label" id="summaryLabel2">Esta semana</div>
+        <div class="summary-value" id="summaryValue2">0€</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label" id="summaryLabel3">Promedio</div>
+        <div class="summary-value" id="summaryValue3">0€</div>
+      </div>
+    </div>
+
+    <!-- Gráfico de barras -->
+    <div class="daily-chart-title" id="barChartTitle">Gasto por día (últimos 7 días)</div>
+    <div class="daily-bars">
+      <div id="dailyBarsContainer"></div>
+    </div>
+
+    <!-- Comparativa -->
+    <div class="weekly-comparison-title" id="comparisonTitle">Comparativa semanal</div>
+    <div class="weekly-bars">
+      <div id="weeklyBarsContainer"></div>
+    </div>
   </div>
 
   <!-- FILTROS -->
@@ -1003,6 +1252,7 @@
   let editingId = null;
   let currentFilter = 'all';
   let selectedCategory = null;
+  let currentDailyWeeklyView = 'daily';
 
   document.getElementById('inputDate').valueAsDate = new Date();
 
@@ -1279,6 +1529,8 @@
     filteredExpenses = currentUserExpenses;
     renderList();
     updateChart();
+    updateDailyWeekly();
+    generateFunMessage();
   }
 
   function renderList() {
@@ -1404,6 +1656,449 @@
     if (!dateStr) return '';
     const [y,m,d] = dateStr.split('-');
     return `${d}/${m}`;
+  }
+
+  function generateFunMessage() {
+    const catMap = {};
+    currentUserExpenses.forEach(e => {
+      catMap[e.cat] = (catMap[e.cat] || 0) + e.amount;
+    });
+
+    const total = currentUserExpenses.reduce((s, e) => s + e.amount, 0);
+    const budget = currentUser.budget;
+    const percentage = (total / budget) * 100;
+
+    const messageCard = document.getElementById('funMessageCard');
+    const funIcon = document.getElementById('funIcon');
+    const funText = document.getElementById('funText');
+
+    // Limpiar clases anteriores
+    messageCard.classList.remove('warning', 'celebration');
+
+    // Mensajes por categoría con gastos altos
+    const categoryMessages = {
+      '🎬 Ocio': {
+        icon: '🎭',
+        messages: [
+          'Wow, ¡te <strong>encanta la diversión</strong>! 🎉',
+          '¡Vaya! Parece que <strong>necesitas entretenimiento</strong> urgentemente 😄',
+          '<strong>¡Hollywood te ha llamado!</strong> Gastos en ocio detectados 🎬'
+        ]
+      },
+      '🍔 Comida fuera': {
+        icon: '🍽️',
+        messages: [
+          '¡Wow! <strong>Te encanta comer fuera</strong> 🍔',
+          'Chef reconocido: ¡<strong>comes fuera constantemente</strong>! 👨‍🍳',
+          '<strong>Inflación alimentaria detectada</strong> en tu perfil 💸'
+        ]
+      },
+      '🛒 Mercado': {
+        icon: '🛍️',
+        messages: [
+          'Parece que <strong>eres un comprador compulsivo</strong> 🛒',
+          '¡El mercado <strong>te adora</strong>! Visitas frecuentes detectadas 📦',
+          '<strong>¡Récord de compras!</strong> El supermercado te considera VIP 👑'
+        ]
+      },
+      '👗 Ropa': {
+        icon: '👠',
+        messages: [
+          'Fashionista alert! <strong>Gastos en ropa</strong> detectados 💎',
+          '¡<strong>Tu armario</strong> es una inversión seria! 👗',
+          '<strong>Influencer en potencia:</strong> Gastos de moda fuerte 📸'
+        ]
+      },
+      '💪 Gym / Deporte': {
+        icon: '💪',
+        messages: [
+          '¡Vaya! <strong>Estás muy comprometido con el fitness</strong> 💪',
+          '<strong>Atleta detectado</strong>: Gastos en deporte confirmados 🏋️',
+          '<strong>¡Eres un ganador fitness!</strong> Ese presupuesto lo demuestra 🥇'
+        ]
+      },
+      '✈️ Viaje': {
+        icon: '🌍',
+        messages: [
+          '¡<strong>Nómada digital detectado</strong>! Eres un viajero 🗺️',
+          '<strong>El mundo es tuyo</strong> con estos gastos en viajes 🧳',
+          '¡<strong>Pasaporte lleno</strong> de aventuras! 🌴'
+        ]
+      },
+      '🎁 Regalo': {
+        icon: '🎀',
+        messages: [
+          '<strong>¡Eres un regalo en persona</strong>! Muy generoso 🎁',
+          '<strong>Santa Claus tiene competencia</strong> con tus gastos 🎅',
+          '¡<strong>Corazón de oro</strong> detectado! Regalos a mansalva 💝'
+        ]
+      },
+      '📱 Tecnología': {
+        icon: '🤖',
+        messages: [
+          '<strong>¡Tech-lover</strong> en la zona! 📱',
+          '¡Vaya! <strong>Eres un entusiasta de la tecnología</strong> 🔌',
+          '<strong>El futuro es tuyo</strong> con estos gastos tech 🚀'
+        ]
+      }
+    };
+
+    // Encontrar categoría con mayor gasto
+    let maxCategory = null;
+    let maxAmount = 0;
+    for (const [cat, amount] of Object.entries(catMap)) {
+      if (amount > maxAmount) {
+        maxAmount = amount;
+        maxCategory = cat;
+      }
+    }
+
+    // Generar mensaje según categoría o presupuesto
+    let message = null;
+    let messageType = 'show';
+
+    if (percentage > 90) {
+      messageCard.classList.add('warning');
+      funIcon.textContent = '⚠️';
+      funText.innerHTML = `¡Cuidado! Ya has usado el <strong>${percentage.toFixed(0)}%</strong> de tu presupuesto 🔥`;
+      messageCard.classList.add(messageType);
+      messageCard.classList.remove('show');
+      messageCard.classList.add('show');
+      return;
+    }
+
+    if (maxCategory && categoryMessages[maxCategory]) {
+      const categoryInfo = categoryMessages[maxCategory];
+      message = categoryInfo.messages[Math.floor(Math.random() * categoryInfo.messages.length)];
+      funIcon.textContent = categoryInfo.icon;
+    } else {
+      // Mensaje genérico si no hay categoría destacada
+      if (total > 0) {
+        const messages = [
+          '¡<strong>Bienvenido a FinTeam</strong>! Vamos registrando tus gastos 💰',
+          '<strong>¡Presupuesto en movimiento!</strong> Los gastos están activos 📊',
+          '¡<strong>Andando</strong> en el camino financiero! 🛤️'
+        ];
+        message = messages[Math.floor(Math.random() * messages.length)];
+        funIcon.textContent = '💡';
+      }
+    }
+
+    if (message) {
+      funText.innerHTML = message;
+      messageCard.classList.add('show');
+    } else {
+      messageCard.classList.remove('show');
+    }
+  }
+
+  function updateDailyWeeklyView(view) {
+    currentDailyWeeklyView = view;
+    
+    // Actualizar botones activos
+    document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Actualizar vista
+    updateDailyWeekly();
+  }
+
+  function updateDailyWeekly() {
+    if (currentUserExpenses.length === 0) {
+      document.getElementById('dailyWeeklyCard').classList.remove('show');
+      return;
+    }
+
+    document.getElementById('dailyWeeklyCard').classList.add('show');
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    if (currentDailyWeeklyView === 'daily') {
+      renderDailyView(today);
+    } else if (currentDailyWeeklyView === 'weekly') {
+      renderWeeklyView(today);
+    } else if (currentDailyWeeklyView === 'monthly') {
+      renderMonthlyView(today);
+    }
+  }
+
+  function renderDailyView(today) {
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+    // Calcular gasto de hoy
+    const todayExpenses = currentUserExpenses.filter(e => new Date(e.date) >= today);
+    const todayTotal = todayExpenses.reduce((s, e) => s + e.amount, 0);
+    
+    // Calcular gasto de esta semana (últimos 7 días)
+    const weekExpenses = currentUserExpenses.filter(e => new Date(e.date) >= sevenDaysAgo);
+    const weekTotal = weekExpenses.reduce((s, e) => s + e.amount, 0);
+    
+    // Promedio diario (últimos 7 días)
+    const dailyAvg = weekTotal / 7;
+
+    document.getElementById('summaryLabel1').textContent = 'Hoy';
+    document.getElementById('summaryValue1').textContent = todayTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel2').textContent = 'Esta semana';
+    document.getElementById('summaryValue2').textContent = weekTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel3').textContent = 'Promedio diario';
+    document.getElementById('summaryValue3').textContent = dailyAvg.toFixed(2) + '€';
+
+    // Gráfico de barras por día
+    const dayMap = {};
+    const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      const dayName = dayNames[d.getDay()];
+      dayMap[`${dayName} ${d.getDate()}`] = 0;
+    }
+
+    weekExpenses.forEach(e => {
+      const d = new Date(e.date);
+      const dayName = dayNames[d.getDay()];
+      const key = `${dayName} ${d.getDate()}`;
+      dayMap[key] = (dayMap[key] || 0) + e.amount;
+    });
+
+    const maxDay = Math.max(...Object.values(dayMap), 1);
+    const dailyBarsHTML = Object.entries(dayMap).map(([day, amount]) => {
+      const percentage = (amount / maxDay) * 100;
+      return `
+        <div class="bar-item">
+          <div class="bar-label">${day}</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" style="width:${percentage}%">
+              ${amount > 0 ? `<div class="bar-value">${amount.toFixed(2)}€</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('barChartTitle').textContent = 'Gasto por día (últimos 7 días)';
+    document.getElementById('dailyBarsContainer').innerHTML = dailyBarsHTML;
+
+    // Comparativa con semana anterior
+    const currentWeekStart = new Date(today);
+    currentWeekStart.setDate(today.getDate() - today.getDay());
+    
+    const lastWeekStart = new Date(currentWeekStart);
+    lastWeekStart.setDate(lastWeekStart.getDate() - 7);
+    const lastWeekEnd = new Date(lastWeekStart);
+    lastWeekEnd.setDate(lastWeekEnd.getDate() + 6);
+
+    const currentWeekExpenses = currentUserExpenses.filter(e => {
+      const d = new Date(e.date);
+      return d >= currentWeekStart && d <= today;
+    });
+    const currentWeekTotal = currentWeekExpenses.reduce((s, e) => s + e.amount, 0);
+
+    const lastWeekExpenses = currentUserExpenses.filter(e => {
+      const d = new Date(e.date);
+      return d >= lastWeekStart && d <= lastWeekEnd;
+    });
+    const lastWeekTotal = lastWeekExpenses.reduce((s, e) => s + e.amount, 0);
+
+    const maxWeek = Math.max(currentWeekTotal, lastWeekTotal, 1);
+    const weeklyBarsHTML = `
+      <div class="bar-item">
+        <div class="bar-label">Semana actual</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(currentWeekTotal / maxWeek) * 100}%">
+            <div class="bar-value">${currentWeekTotal.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">Semana pasada</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(lastWeekTotal / maxWeek) * 100}%">
+            <div class="bar-value">${lastWeekTotal.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('comparisonTitle').textContent = 'Comparativa semanal';
+    document.getElementById('weeklyBarsContainer').innerHTML = weeklyBarsHTML;
+  }
+
+  function renderWeeklyView(today) {
+    const fourWeeksAgo = new Date(today);
+    fourWeeksAgo.setDate(fourWeeksAgo.getDate() - 28);
+
+    // Gasto últimas 4 semanas
+    const weeklyExpenses = currentUserExpenses.filter(e => new Date(e.date) >= fourWeeksAgo);
+    const weeklyTotal = weeklyExpenses.reduce((s, e) => s + e.amount, 0);
+
+    // Promedio por semana
+    const avgPerWeek = weeklyTotal / 4;
+
+    // Semana actual
+    const currentWeekStart = new Date(today);
+    currentWeekStart.setDate(today.getDate() - today.getDay());
+    const currentWeekExpenses = currentUserExpenses.filter(e => {
+      const d = new Date(e.date);
+      return d >= currentWeekStart && d <= today;
+    });
+    const currentWeekTotal = currentWeekExpenses.reduce((s, e) => s + e.amount, 0);
+
+    document.getElementById('summaryLabel1').textContent = 'Semana actual';
+    document.getElementById('summaryValue1').textContent = currentWeekTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel2').textContent = 'Últimas 4 semanas';
+    document.getElementById('summaryValue2').textContent = weeklyTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel3').textContent = 'Promedio semanal';
+    document.getElementById('summaryValue3').textContent = avgPerWeek.toFixed(2) + '€';
+
+    // Gráfico por semana
+    const weekMap = {};
+    for (let i = 3; i >= 0; i--) {
+      const weekStart = new Date(today);
+      weekStart.setDate(weekStart.getDate() - (today.getDay() + 7 * i));
+      const weekNum = Math.ceil((today.getDate() - (today.getDay() + 7 * i)) / 7);
+      weekMap[`Semana ${4 - i}`] = 0;
+    }
+
+    weeklyExpenses.forEach(e => {
+      const d = new Date(e.date);
+      const weeksDiff = Math.floor((today - d) / (7 * 24 * 60 * 60 * 1000));
+      const weekNum = Math.min(3, weeksDiff);
+      const key = `Semana ${4 - weekNum}`;
+      if (weekMap[key] !== undefined) {
+        weekMap[key] = (weekMap[key] || 0) + e.amount;
+      }
+    });
+
+    const maxWeek = Math.max(...Object.values(weekMap), 1);
+    const weeklyBarsHTML = Object.entries(weekMap).map(([week, amount]) => {
+      const percentage = (amount / maxWeek) * 100;
+      return `
+        <div class="bar-item">
+          <div class="bar-label">${week}</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" style="width:${percentage}%">
+              ${amount > 0 ? `<div class="bar-value">${amount.toFixed(2)}€</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('barChartTitle').textContent = 'Gasto por semana (últimas 4 semanas)';
+    document.getElementById('dailyBarsContainer').innerHTML = weeklyBarsHTML;
+
+    // Comparativa semana actual vs promedio
+    const maxComp = Math.max(currentWeekTotal, avgPerWeek, 1);
+    const comparisonHTML = `
+      <div class="bar-item">
+        <div class="bar-label">Semana actual</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(currentWeekTotal / maxComp) * 100}%">
+            <div class="bar-value">${currentWeekTotal.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">Promedio semanal</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(avgPerWeek / maxComp) * 100}%">
+            <div class="bar-value">${avgPerWeek.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('comparisonTitle').textContent = 'Vs promedio semanal';
+    document.getElementById('weeklyBarsContainer').innerHTML = comparisonHTML;
+  }
+
+  function renderMonthlyView(today) {
+    const twelveMonthsAgo = new Date(today);
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+
+    // Gasto últimos 12 meses
+    const monthlyExpenses = currentUserExpenses.filter(e => new Date(e.date) >= twelveMonthsAgo);
+    const monthlyTotal = monthlyExpenses.reduce((s, e) => s + e.amount, 0);
+
+    // Promedio por mes
+    const avgPerMonth = monthlyTotal / 12;
+
+    // Mes actual
+    const thisMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const thisMonthExpenses = currentUserExpenses.filter(e => {
+      const d = new Date(e.date);
+      return d >= thisMonthStart && d <= today;
+    });
+    const thisMonthTotal = thisMonthExpenses.reduce((s, e) => s + e.amount, 0);
+
+    document.getElementById('summaryLabel1').textContent = 'Mes actual';
+    document.getElementById('summaryValue1').textContent = thisMonthTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel2').textContent = 'Últimos 12 meses';
+    document.getElementById('summaryValue2').textContent = monthlyTotal.toFixed(2) + '€';
+    document.getElementById('summaryLabel3').textContent = 'Promedio mensual';
+    document.getElementById('summaryValue3').textContent = avgPerMonth.toFixed(2) + '€';
+
+    // Gráfico por mes
+    const monthMap = {};
+    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(today);
+      d.setMonth(d.getMonth() - i);
+      monthMap[monthNames[d.getMonth()]] = 0;
+    }
+
+    monthlyExpenses.forEach(e => {
+      const d = new Date(e.date);
+      const monthName = monthNames[d.getMonth()];
+      monthMap[monthName] = (monthMap[monthName] || 0) + e.amount;
+    });
+
+    const maxMonth = Math.max(...Object.values(monthMap), 1);
+    const monthlyBarsHTML = Object.entries(monthMap).map(([month, amount]) => {
+      const percentage = (amount / maxMonth) * 100;
+      return `
+        <div class="bar-item">
+          <div class="bar-label">${month}</div>
+          <div class="bar-wrapper">
+            <div class="bar-fill" style="width:${percentage}%">
+              ${amount > 0 ? `<div class="bar-value">${amount.toFixed(2)}€</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('barChartTitle').textContent = 'Gasto por mes (últimos 12 meses)';
+    document.getElementById('dailyBarsContainer').innerHTML = monthlyBarsHTML;
+
+    // Comparativa mes actual vs promedio
+    const maxComp = Math.max(thisMonthTotal, avgPerMonth, 1);
+    const comparisonHTML = `
+      <div class="bar-item">
+        <div class="bar-label">Mes actual</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(thisMonthTotal / maxComp) * 100}%">
+            <div class="bar-value">${thisMonthTotal.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">Promedio mensual</div>
+        <div class="bar-wrapper">
+          <div class="bar-fill" style="width:${(avgPerMonth / maxComp) * 100}%">
+            <div class="bar-value">${avgPerMonth.toFixed(2)}€</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('comparisonTitle').textContent = 'Vs promedio mensual';
+    document.getElementById('weeklyBarsContainer').innerHTML = comparisonHTML;
   }
 
   function showToast(msg) {
