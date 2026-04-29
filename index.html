@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinTeam — Rastreador de Gastos Compartido</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <style>
   :root {
     --bg: #0a0e1a;
@@ -130,8 +131,6 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 217, 255, 0.2);
   }
-
-  .btn-login:active { transform: translateY(0); }
 
   .login-error {
     background: rgba(255, 68, 119, 0.1);
@@ -290,52 +289,59 @@
 
   .progress-bar {
     height: 6px;
-    background: var(--border);
-    border-radius: 99px;
+    background: var(--surface2);
+    border-radius: 3px;
     overflow: hidden;
   }
 
   .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 99px;
-    transition: width 0.5s ease;
+    transition: width 0.3s;
+    border-radius: 3px;
   }
 
-  .progress-fill.danger { background: linear-gradient(90deg, var(--accent3), #ff7a8a); }
+  .progress-fill.danger {
+    background: linear-gradient(90deg, var(--accent3), #ff6699);
+  }
 
-  /* FORM */
+  /* FORM CARD */
   .form-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 20px;
+    padding: 24px;
     margin-bottom: 16px;
   }
 
   .form-title {
     font-family: 'Syne', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    margin-bottom: 20px;
     color: var(--accent);
-    margin-bottom: 16px;
   }
 
   .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group.full { grid-column: 1 / -1; }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
 
   .form-group label {
     font-size: 10px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--muted);
   }
@@ -346,301 +352,483 @@
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 10px;
     color: var(--text);
     font-family: 'DM Mono', monospace;
     font-size: 13px;
     outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
+    transition: all 0.3s;
   }
 
   .form-group input:focus,
   .form-group select:focus,
   .form-group textarea:focus {
     border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.15);
   }
 
-  .form-group textarea { resize: none; height: 60px; }
-  select option { background: var(--surface2); }
+  .form-group textarea {
+    resize: none;
+    height: 60px;
+  }
 
   .btn-add {
     width: 100%;
-    padding: 13px;
+    padding: 12px;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     color: var(--bg);
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-family: 'Syne', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
+    transition: all 0.3s;
+    text-transform: uppercase;
   }
 
-  .btn-add:hover { opacity: 0.9; }
-  .btn-add:active { transform: scale(0.98); }
+  .btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 217, 255, 0.25);
+  }
 
-  /* CATEGORIES SUMMARY */
+  .btn-add.edit {
+    background: linear-gradient(90deg, #ff9500, #ffb800);
+  }
+
+  /* CHART CARD */
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .chart-card.show {
+    display: block;
+  }
+
+  .chart-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .chart-container {
+    position: relative;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+
+  /* CATEGORÍAS */
   .cats-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 20px;
+    padding: 24px;
     margin-bottom: 16px;
+    display: none;
+  }
+
+  .cats-card.show {
+    display: block;
   }
 
   .cats-title {
     font-family: 'Syne', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    color: var(--accent);
   }
 
   .cat-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
   }
 
-  .cat-icon { font-size: 16px; width: 24px; text-align: center; }
-  .cat-info { flex: 1; }
-  .cat-name { font-size: 12px; color: var(--text); }
+  .cat-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .cat-icon {
+    font-size: 20px;
+    min-width: 24px;
+  }
+
+  .cat-info {
+    flex: 1;
+  }
+
+  .cat-name {
+    font-size: 12px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
 
   .cat-bar-wrap {
     height: 4px;
-    background: var(--border);
-    border-radius: 99px;
-    margin-top: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
     overflow: hidden;
   }
 
   .cat-bar {
     height: 100%;
-    border-radius: 99px;
-    transition: width 0.5s ease;
+    border-radius: 2px;
+    transition: width 0.3s;
   }
 
   .cat-amount {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--accent3);
-    min-width: 52px;
-    text-align: right;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
   }
 
-  /* EXPENSES LIST */
+  /* LIST CARD */
   .list-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 20px;
+    padding: 24px;
   }
 
   .list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 20px;
   }
 
   .list-title {
     font-family: 'Syne', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--accent3);
+    color: var(--accent);
   }
 
   .btn-clear {
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: 1px solid var(--border);
+    background: transparent;
+    border: 1px solid var(--accent3);
+    color: var(--accent3);
+    padding: 6px 10px;
     border-radius: 6px;
-    padding: 4px 8px;
+    font-size: 10px;
     cursor: pointer;
-    font-family: 'DM Mono', monospace;
-    transition: color 0.2s, border-color 0.2s;
+    transition: all 0.2s;
   }
 
   .btn-clear:hover {
-    color: var(--accent3);
-    border-color: var(--accent3);
+    background: rgba(255, 68, 119, 0.1);
   }
 
   .expense-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
     padding: 12px 0;
     border-bottom: 1px solid var(--border);
-    animation: slideIn 0.3s ease;
+    transition: background 0.2s;
   }
 
-  .expense-item:last-child { border-bottom: none; }
+  .expense-item:last-child {
+    border-bottom: none;
+  }
 
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+  .expense-item:hover {
+    background: rgba(0, 217, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px 8px;
+    cursor: pointer;
   }
 
   .exp-icon {
-    width: 36px; height: 36px;
-    background: var(--surface2);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
+    font-size: 20px;
+    min-width: 24px;
   }
 
-  .exp-info { flex: 1; min-width: 0; }
+  .exp-info {
+    flex: 1;
+  }
 
   .exp-top {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 8px;
+    margin-bottom: 6px;
   }
 
   .exp-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 12px;
+    color: var(--text);
   }
 
   .exp-amount {
-    font-size: 14px;
-    font-weight: 500;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--accent3);
-    flex-shrink: 0;
   }
 
   .exp-meta {
+    font-size: 10px;
+    color: var(--muted);
     display: flex;
-    gap: 8px;
-    margin-top: 3px;
-    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 
   .exp-cat {
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
+    color: var(--accent);
   }
 
   .exp-comment {
-    font-size: 11px;
     color: var(--muted);
-    font-style: italic;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 160px;
   }
 
   .exp-date {
-    font-size: 10px;
     color: var(--muted);
-    margin-left: auto;
-    flex-shrink: 0;
   }
 
-  .btn-del {
-    background: none;
+  .btn-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-del, .btn-edit {
+    background: transparent;
     border: none;
     color: var(--muted);
     cursor: pointer;
     font-size: 14px;
-    padding: 4px;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
-    flex-shrink: 0;
+    transition: all 0.2s;
+    padding: 4px 6px;
   }
 
   .btn-del:hover {
     color: var(--accent3);
-    background: rgba(255, 68, 119, 0.1);
+  }
+
+  .btn-edit:hover {
+    color: var(--accent);
+  }
+
+  .expense-item.editing {
+    background: rgba(0, 217, 255, 0.15);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
   }
 
   .empty-state {
     text-align: center;
-    padding: 32px 0;
+    padding: 40px 20px;
     color: var(--muted);
-    font-size: 12px;
-    letter-spacing: 1px;
   }
 
-  .empty-state .empty-icon { font-size: 32px; margin-bottom: 10px; }
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .empty-state div:last-child {
+    font-size: 13px;
+    line-height: 1.6;
+  }
 
   /* TOAST */
   .toast {
     position: fixed;
-    bottom: 24px; left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    color: var(--bg);
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .toast.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* MODAL */
+  .modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+  }
+
+  .modal.show {
+    display: flex;
+  }
+
+  .modal-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .btn-cancel, .btn-save {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
     font-family: 'Syne', sans-serif;
     font-size: 13px;
     font-weight: 700;
-    padding: 10px 20px;
-    border-radius: 99px;
-    transition: transform 0.3s ease;
-    z-index: 100;
-    white-space: nowrap;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
   }
 
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .btn-cancel {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-cancel:hover {
+    border-color: var(--accent3);
+    color: var(--accent3);
+  }
+
+  .btn-save {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: var(--bg);
+  }
+
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 217, 255, 0.25);
+  }
+
+  /* FILTROS */
+  .filter-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0, 217, 255, 0.1);
+  }
+
+  @media (max-width: 640px) {
+    .balance-row {
+      grid-template-columns: 1fr;
+    }
+
+    .header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .header-right {
+      width: 100%;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
       <div class="icon">💰</div>
       <h1>FinTeam</h1>
-      <div class="subtitle">Rastreador Compartido</div>
+      <div class="subtitle">Gestor de gastos</div>
     </div>
     <div class="login-form">
-      <div class="login-error" id="loginError"></div>
       <div class="form-group">
-        <label>Tu nombre</label>
-        <input type="text" id="loginName" placeholder="ej. María" maxlength="20">
+        <label>Nombre</label>
+        <input type="text" id="loginName" placeholder="Tu nombre" maxlength="20">
       </div>
       <div class="form-group">
-        <label>Presupuesto mensual (€)</label>
-        <input type="number" id="loginBudget" placeholder="540" min="300" max="2000" step="50">
+        <label>Presupuesto (€)</label>
+        <input type="number" id="loginBudget" placeholder="300-2000" min="300" max="2000" value="540">
       </div>
       <button class="btn-login" onclick="login()">Entrar</button>
+      <div class="login-error" id="loginError"></div>
     </div>
   </div>
 </div>
 
-<!-- APP SCREEN -->
 <div class="app-screen" id="appScreen">
-  <!-- HEADER -->
   <div class="header">
     <div class="header-left">
-      <div class="user-label">👤 Usuario Activo</div>
-      <h1 id="userName">Mi Nombre</h1>
+      <h1>💰 FinTeam</h1>
+      <div class="user-label">Sesión: <span id="userName">Usuario</span></div>
     </div>
     <div class="header-right">
       <div class="user-badge">
-        <div class="user-avatar" id="userAvatar">M</div>
+        <div class="user-avatar" id="userAvatar">U</div>
         <span id="userBudgetDisplay">540€</span>
       </div>
       <button class="btn-logout" onclick="logout()">Salir</button>
@@ -676,7 +864,7 @@
 
   <!-- FORM -->
   <div class="form-card">
-    <div class="form-title">+ Nuevo gasto</div>
+    <div class="form-title" id="formTitle">+ Nuevo gasto</div>
     <div class="form-grid">
       <div class="form-group">
         <label>Concepto</label>
@@ -713,13 +901,29 @@
         <textarea id="inputComment" placeholder="¿De qué era este gasto?"></textarea>
       </div>
     </div>
-    <button class="btn-add" onclick="addExpense()">Añadir gasto</button>
+    <button class="btn-add" id="btnSubmit" onclick="addExpense()">Añadir gasto</button>
+    <button class="btn-add" id="btnCancel" onclick="cancelEdit()" style="display:none; background: var(--surface2); border: 1px solid var(--accent3); color: var(--accent3); margin-top: 8px;">Cancelar edición</button>
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="chart-card" id="chartCard">
+    <div class="chart-title">📊 Gastos por categoría</div>
+    <div class="chart-container">
+      <canvas id="expenseChart"></canvas>
+    </div>
   </div>
 
   <!-- CATEGORÍAS -->
-  <div class="cats-card" id="catsCard" style="display:none">
-    <div class="cats-title">📊 Por categoría</div>
+  <div class="cats-card" id="catsCard">
+    <div class="cats-title">📈 Resumen por categoría</div>
     <div id="catsList"></div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-bar" id="filterBar" style="display:none">
+    <button class="filter-btn active" onclick="filterExpenses('all')">Todos</button>
+    <button class="filter-btn" onclick="filterExpenses('7days')">Últimos 7 días</button>
+    <button class="filter-btn" onclick="filterExpenses('30days')">Este mes</button>
   </div>
 
   <!-- LISTA -->
@@ -739,6 +943,52 @@
 
 <div class="toast" id="toast"></div>
 
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-title" id="modalTitle">Editar gasto</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Concepto</label>
+        <input type="text" id="modalName" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label>Importe (€)</label>
+        <input type="number" id="modalAmount" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="modalCat">
+          <option value="🛒 Mercado">🛒 Mercado</option>
+          <option value="🍔 Comida fuera">🍔 Comida fuera</option>
+          <option value="🚇 Transporte">🚇 Transporte</option>
+          <option value="💊 Salud">💊 Salud</option>
+          <option value="💪 Gym / Deporte">💪 Gym / Deporte</option>
+          <option value="🎬 Ocio">🎬 Ocio</option>
+          <option value="👗 Ropa">👗 Ropa</option>
+          <option value="📱 Tecnología">📱 Tecnología</option>
+          <option value="🏠 Hogar">🏠 Hogar</option>
+          <option value="💳 Deuda / Préstamo">💳 Deuda / Préstamo</option>
+          <option value="🎁 Regalo">🎁 Regalo</option>
+          <option value="✈️ Viaje">✈️ Viaje</option>
+          <option value="📦 Otro">📦 Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" id="modalDate">
+      </div>
+      <div class="form-group full">
+        <label>Comentario (opcional)</label>
+        <textarea id="modalComment"></textarea>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <script>
   const CAT_COLORS = [
     '#00d9ff','#00ff88','#ff4477','#ff88ff','#ffaa00',
@@ -748,8 +998,12 @@
   let currentUser = null;
   let allUsers = JSON.parse(localStorage.getItem('finteam_users') || '{}');
   let currentUserExpenses = [];
+  let filteredExpenses = [];
+  let chart = null;
+  let editingId = null;
+  let currentFilter = 'all';
+  let selectedCategory = null;
 
-  // Set today's date
   document.getElementById('inputDate').valueAsDate = new Date();
 
   function getCatIcon(cat) {
@@ -775,7 +1029,6 @@
 
     error.classList.remove('show');
 
-    // Store or retrieve user
     if (!allUsers[name]) {
       allUsers[name] = { budget, expenses: [] };
     }
@@ -787,6 +1040,7 @@
     };
 
     currentUserExpenses = currentUser.expenses;
+    filteredExpenses = currentUserExpenses;
 
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('appScreen').classList.add('active');
@@ -800,18 +1054,23 @@
   }
 
   function logout() {
-    // Save current user data
     allUsers[currentUser.name].expenses = currentUserExpenses;
     localStorage.setItem('finteam_users', JSON.stringify(allUsers));
 
     currentUser = null;
     currentUserExpenses = [];
+    selectedCategory = null;
 
     document.getElementById('loginScreen').classList.remove('hidden');
     document.getElementById('appScreen').classList.remove('active');
     document.getElementById('loginError').classList.remove('show');
     document.getElementById('loginName').value = '';
-    document.getElementById('loginBudget').value = '';
+    document.getElementById('loginBudget').value = '540';
+    
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
   }
 
   function addExpense() {
@@ -826,31 +1085,84 @@
       return;
     }
 
-    const expense = {
-      id: Date.now(),
-      name, amount, cat, date, comment
-    };
+    if (editingId !== null) {
+      const index = currentUserExpenses.findIndex(e => e.id === editingId);
+      if (index !== -1) {
+        currentUserExpenses[index] = { id: editingId, name, amount, cat, date, comment };
+        showToast('✏️ Gasto actualizado correctamente');
+        editingId = null;
+      }
+    } else {
+      const expense = {
+        id: Date.now(),
+        name, amount, cat, date, comment
+      };
+      currentUserExpenses.unshift(expense);
+      showToast('✅ Gasto añadido correctamente');
+    }
 
-    currentUserExpenses.unshift(expense);
     save();
     render();
     clearForm();
-    showToast('✅ Gasto añadido');
   }
 
   function deleteExpense(id) {
-    currentUserExpenses = currentUserExpenses.filter(e => e.id !== id);
-    save();
-    render();
-    showToast('🗑️ Gasto eliminado');
+    if (confirm('¿Eliminar este gasto?')) {
+      currentUserExpenses = currentUserExpenses.filter(e => e.id !== id);
+      save();
+      render();
+      showToast('🗑️ Gasto eliminado');
+    }
+  }
+
+  function editExpense(id) {
+    const expense = currentUserExpenses.find(e => e.id === id);
+    if (!expense) return;
+
+    editingId = id;
+    document.getElementById('inputName').value = expense.name;
+    document.getElementById('inputAmount').value = expense.amount;
+    document.getElementById('inputCat').value = expense.cat;
+    document.getElementById('inputDate').value = expense.date;
+    document.getElementById('inputComment').value = expense.comment;
+    document.getElementById('formTitle').textContent = '✏️ Editar gasto';
+    document.getElementById('btnSubmit').textContent = 'Guardar cambios';
+    document.getElementById('btnSubmit').classList.add('edit');
+    document.getElementById('btnCancel').style.display = 'block';
+
+    // Marcar el elemento en la lista como editando
+    document.querySelectorAll('.expense-item').forEach(item => item.classList.remove('editing'));
+    const items = document.querySelectorAll('.expense-item');
+    items.forEach(item => {
+      if (item.getAttribute('data-id') === String(id)) {
+        item.classList.add('editing');
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('inputName').focus();
+    showToast('✏️ Editando gasto - Realiza cambios y guarda');
+  }
+
+  function cancelEdit() {
+    editingId = null;
+    document.getElementById('formTitle').textContent = '+ Nuevo gasto';
+    document.getElementById('btnSubmit').textContent = 'Añadir gasto';
+    document.getElementById('btnSubmit').classList.remove('edit');
+    document.getElementById('btnCancel').style.display = 'none';
+    document.querySelectorAll('.expense-item').forEach(item => item.classList.remove('editing'));
+    clearForm();
+    showToast('❌ Edición cancelada');
   }
 
   function clearAll() {
     if (currentUserExpenses.length === 0) return;
     if (confirm('¿Borrar todos tus gastos?')) {
       currentUserExpenses = [];
+      filteredExpenses = [];
       save();
       render();
+      showToast('🗑️ Todos los gastos eliminados');
     }
   }
 
@@ -859,11 +1171,59 @@
     document.getElementById('inputAmount').value = '';
     document.getElementById('inputComment').value = '';
     document.getElementById('inputDate').valueAsDate = new Date();
+    editingId = null;
+    document.getElementById('formTitle').textContent = '+ Nuevo gasto';
+    document.getElementById('btnSubmit').textContent = 'Añadir gasto';
+    document.getElementById('btnSubmit').classList.remove('edit');
   }
 
   function save() {
     allUsers[currentUser.name].expenses = currentUserExpenses;
     localStorage.setItem('finteam_users', JSON.stringify(allUsers));
+  }
+
+  function filterByCategory(categoryName) {
+    selectedCategory = categoryName;
+    const categoryExpenses = currentUserExpenses.filter(e => e.cat === categoryName);
+    filteredExpenses = categoryExpenses;
+    
+    renderList();
+    updateChart();
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    showToast(`📊 Mostrando gastos de: ${categoryName}`);
+  }
+
+  function clearCategoryFilter() {
+    selectedCategory = null;
+    filteredExpenses = currentUserExpenses;
+    renderList();
+    updateChart();
+    showToast('🔄 Filtro de categoría eliminado');
+  }
+
+  function filterExpenses(filter) {
+    currentFilter = filter;
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    if (filter === 'all') {
+      filteredExpenses = [...currentUserExpenses];
+    } else if (filter === '7days') {
+      const sevenDaysAgo = new Date(today);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      filteredExpenses = currentUserExpenses.filter(e => new Date(e.date) >= sevenDaysAgo);
+    } else if (filter === '30days') {
+      const thirtyDaysAgo = new Date(today);
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      filteredExpenses = currentUserExpenses.filter(e => new Date(e.date) >= thirtyDaysAgo);
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    renderList();
+    updateChart();
   }
 
   function render() {
@@ -880,7 +1240,16 @@
     fill.style.width = pct + '%';
     fill.className = 'progress-fill' + (pct >= 90 ? ' danger' : '');
 
-    // Categories
+    // Mostrar filtros y gráfico
+    if (currentUserExpenses.length > 0) {
+      document.getElementById('filterBar').style.display = 'flex';
+      document.getElementById('chartCard').classList.add('show');
+    } else {
+      document.getElementById('filterBar').style.display = 'none';
+      document.getElementById('chartCard').classList.remove('show');
+    }
+
+    // Categorías
     const catMap = {};
     currentUserExpenses.forEach(e => {
       catMap[e.cat] = (catMap[e.cat] || 0) + e.amount;
@@ -889,7 +1258,7 @@
 
     const catsCard = document.getElementById('catsCard');
     if (catEntries.length > 0) {
-      catsCard.style.display = 'block';
+      catsCard.classList.add('show');
       const maxCat = catEntries[0][1];
       document.getElementById('catsList').innerHTML = catEntries.map(([cat, amt], i) => `
         <div class="cat-row">
@@ -904,16 +1273,44 @@
         </div>
       `).join('');
     } else {
-      catsCard.style.display = 'none';
+      catsCard.classList.remove('show');
     }
 
-    // Expenses list
+    filteredExpenses = currentUserExpenses;
+    renderList();
+    updateChart();
+  }
+
+  function renderList() {
     const list = document.getElementById('expensesList');
-    if (currentUserExpenses.length === 0) {
-      list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div>Aún no hay gastos registrados.<br>¡Añade tu primer gasto!</div></div>`;
+    
+    // Mostrar indicador de filtro activo
+    const listHeader = document.querySelector('.list-header');
+    if (selectedCategory) {
+      let filterIndicator = document.getElementById('filterIndicator');
+      if (!filterIndicator) {
+        filterIndicator = document.createElement('div');
+        filterIndicator.id = 'filterIndicator';
+        filterIndicator.style.cssText = 'background: rgba(0, 217, 255, 0.1); border: 1px solid #00d9ff; border-radius: 8px; padding: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;';
+        list.parentElement.insertBefore(filterIndicator, list);
+      }
+      filterIndicator.innerHTML = `
+        <div style="color: #00d9ff; font-size: 12px;">
+          <strong>Filtrado por:</strong> ${selectedCategory.substring(2)}
+        </div>
+        <button onclick="clearCategoryFilter()" style="background: transparent; border: 1px solid #00d9ff; color: #00d9ff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px;">Limpiar filtro</button>
+      `;
+      filterIndicator.style.display = 'block';
     } else {
-      list.innerHTML = currentUserExpenses.map(e => `
-        <div class="expense-item">
+      const filterIndicator = document.getElementById('filterIndicator');
+      if (filterIndicator) filterIndicator.style.display = 'none';
+    }
+    
+    if (filteredExpenses.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div>No hay gastos registrados.<br>¡Añade tu primer gasto!</div></div>`;
+    } else {
+      list.innerHTML = filteredExpenses.map(e => `
+        <div class="expense-item" data-id="${e.id}" onclick="editExpense(${e.id})">
           <div class="exp-icon">${getCatIcon(e.cat)}</div>
           <div class="exp-info">
             <div class="exp-top">
@@ -926,9 +1323,74 @@
               <span class="exp-date">${formatDate(e.date)}</span>
             </div>
           </div>
-          <button class="btn-del" onclick="deleteExpense(${e.id})">✕</button>
+          <div class="btn-actions" onclick="event.stopPropagation()">
+            <button class="btn-del" onclick="deleteExpense(${e.id})">✕</button>
+          </div>
         </div>
       `).join('');
+    }
+  }
+
+  function updateChart() {
+    const catMap = {};
+    const catFullNames = {};
+    filteredExpenses.forEach(e => {
+      catMap[e.cat] = (catMap[e.cat] || 0) + e.amount;
+      catFullNames[e.cat.substring(2)] = e.cat;
+    });
+
+    const labels = Object.keys(catMap).map(cat => cat.substring(2));
+    const data = Object.values(catMap);
+    const fullCatNames = labels.map(label => catFullNames[label]);
+
+    const ctx = document.getElementById('expenseChart');
+    
+    if (chart) {
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = data;
+      chart.update();
+    } else {
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: CAT_COLORS,
+            borderColor: '#12172b',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          onClick: (event, elements) => {
+            if (elements.length > 0) {
+              const index = elements[0].index;
+              const categoryName = fullCatNames[index];
+              filterByCategory(categoryName);
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#e8eef5',
+                font: { size: 12 },
+                padding: 15,
+                cursor: 'pointer'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                afterLabel: function() {
+                  return 'Click para filtrar';
+                }
+              }
+            }
+          }
+        }
+      });
     }
   }
 
