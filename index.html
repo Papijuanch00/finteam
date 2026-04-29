@@ -1,3 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinTeam — Rastreador de Gastos Compartido</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #12172b;
+    --surface2: #1a1f38;
+    --border: #2a3050;
+    --accent: #00d9ff;
+    --accent2: #00ff88;
+    --accent3: #ff4477;
+    --text: #e8eef5;
+    --muted: #6b7a96;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: linear-gradient(135deg, var(--bg) 0%, #0f1220 100%);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 24px 16px 80px;
+  }
+
+  /* LOGIN SCREEN */
+  .login-screen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, var(--bg) 0%, #0f1220 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .login-screen.hidden { display: none; }
+
+  .login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 380px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+  }
+
+  .login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .login-logo .icon { font-size: 48px; margin-bottom: 16px; }
+
+  .login-logo h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+
+  .login-logo .subtitle {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .login-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .login-form label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .login-form input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.3s;
+  }
+
+  .login-form input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.15);
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+
+  .btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 217, 255, 0.2);
+  }
+
+  .login-error {
+    background: rgba(255, 68, 119, 0.1);
+    border: 1px solid var(--accent3);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 11px;
+    color: #ff8899;
+    display: none;
+  }
+
+  .login-error.show { display: block; }
+
+  /* APP SCREEN */
+  .app-screen {
+    display: none;
+  }
+
+  .app-screen.active { display: block; }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -24px; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,217,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-left h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+
+  .header-left .user-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .header-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .user-badge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 8px 14px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .user-avatar {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .btn-logout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-logout:hover {
+    color: var(--accent3);
+    border-color: var(--accent3);
+  }
+
+  /* BALANCE CARD */
+  .balance-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .balance-card::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(0,217,255,0.12) 0%, transparent 70%);
+  }
+
+  .balance-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .balance-item .bal-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .balance-item .bal-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .bal-value.budget { color: var(--accent); }
+  .bal-value.spent { color: var(--accent3); }
+  .bal-value.remaining { color: var(--accent2); }
+
+  .progress-wrap {
+    margin-top: 16px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.3s;
+    border-radius: 3px;
+  }
+
+  .progress-fill.danger {
+    background: linear-gradient(90deg, var(--accent3), #ff6699);
+  }
+
+  /* FORM CARD */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .form-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.3s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.15);
+  }
+
+  .form-group textarea {
+    resize: none;
+    height: 60px;
+  }
+
+  .btn-add {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+
+  .btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 217, 255, 0.25);
+  }
+
+  .btn-add.edit {
+    background: linear-gradient(90deg, #ff9500, #ffb800);
+  }
+
+  /* CHART CARD */
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .chart-card.show {
+    display: block;
+  }
+
+  .chart-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .chart-container {
+    position: relative;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+
+  /* CATEGORÍAS */
+  .cats-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .cats-card.show {
+    display: block;
+  }
+
+  .cats-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+
+  .cat-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .cat-icon {
+    font-size: 20px;
+    min-width: 24px;
+  }
+
+  .cat-info {
+    flex: 1;
+  }
+
+  .cat-name {
+    font-size: 12px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .cat-bar-wrap {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .cat-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+
+  .cat-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* LIST CARD */
+  .list-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .list-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .btn-clear {
+    background: transparent;
+    border: 1px solid var(--accent3);
+    color: var(--accent3);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-clear:hover {
+    background: rgba(255, 68, 119, 0.1);
+  }
+
+  .expense-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .expense-item:last-child {
+    border-bottom: none;
+  }
+
+  .expense-item:hover {
+    background: rgba(0, 217, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px 8px;
+    cursor: pointer;
+  }
+
+  .exp-icon {
+    font-size: 20px;
+    min-width: 24px;
+  }
+
+  .exp-info {
+    flex: 1;
+  }
+
+  .exp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .exp-name {
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .exp-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent3);
+  }
+
+  .exp-meta {
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .exp-cat {
+    color: var(--accent);
+  }
+
+  .exp-comment {
+    color: var(--muted);
+  }
+
+  .exp-date {
+    color: var(--muted);
+  }
+
+  .btn-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-del, .btn-edit {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    padding: 4px 6px;
+  }
+
+  .btn-del:hover {
+    color: var(--accent3);
+  }
+
+  .btn-edit:hover {
+    color: var(--accent);
+  }
+
+  .expense-item.editing {
+    background: rgba(0, 217, 255, 0.15);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+  }
+
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .empty-state div:last-child {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .toast.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* MODAL */
+  .modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+  }
+
+  .modal.show {
+    display: flex;
+  }
+
+  .modal-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .btn-cancel, .btn-save {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .btn-cancel {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-cancel:hover {
+    border-color: var(--accent3);
+    color: var(--accent3);
+  }
+
+  .btn-save {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: var(--bg);
+  }
+
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 217, 255, 0.25);
+  }
+
+  /* FILTROS */
+  .filter-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0, 217, 255, 0.1);
+  }
+
+  @media (max-width: 640px) {
+    .balance-row {
+      grid-template-columns: 1fr;
+    }
+
+    .header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .header-right {
+      width: 100%;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="icon">💰</div>
+      <h1>FinTeam</h1>
+      <div class="subtitle">Gestor de gastos</div>
+    </div>
+    <div class="login-form">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" id="loginName" placeholder="Tu nombre" maxlength="20">
+      </div>
+      <div class="form-group">
+        <label>Presupuesto (€)</label>
+        <input type="number" id="loginBudget" placeholder="300-2000" min="300" max="2000" value="540">
+      </div>
+      <button class="btn-login" onclick="login()">Entrar</button>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+</div>
+
+<div class="app-screen" id="appScreen">
+  <div class="header">
+    <div class="header-left">
+      <h1>💰 FinTeam</h1>
+      <div class="user-label">Sesión: <span id="userName">Usuario</span></div>
+    </div>
+    <div class="header-right">
+      <div class="user-badge">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <span id="userBudgetDisplay">540€</span>
+      </div>
+      <button class="btn-logout" onclick="logout()">Salir</button>
+    </div>
+  </div>
+
+  <!-- BALANCE -->
+  <div class="balance-card">
+    <div class="balance-row">
+      <div class="balance-item">
+        <div class="bal-label">Presupuesto</div>
+        <div class="bal-value budget" id="totalBudget">540€</div>
+      </div>
+      <div class="balance-item">
+        <div class="bal-label">Gastado</div>
+        <div class="bal-value spent" id="totalSpent">0€</div>
+      </div>
+      <div class="balance-item">
+        <div class="bal-label">Disponible</div>
+        <div class="bal-value remaining" id="totalRemaining">540€</div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Presupuesto usado</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div class="form-title" id="formTitle">+ Nuevo gasto</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Concepto</label>
+        <input type="text" id="inputName" placeholder="ej. Café" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label>Importe (€)</label>
+        <input type="number" id="inputAmount" placeholder="0.00" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="inputCat">
+          <option value="🛒 Mercado">🛒 Mercado</option>
+          <option value="🍔 Comida fuera">🍔 Comida fuera</option>
+          <option value="🚇 Transporte">🚇 Transporte</option>
+          <option value="💊 Salud">💊 Salud</option>
+          <option value="💪 Gym / Deporte">💪 Gym / Deporte</option>
+          <option value="🎬 Ocio">🎬 Ocio</option>
+          <option value="👗 Ropa">👗 Ropa</option>
+          <option value="📱 Tecnología">📱 Tecnología</option>
+          <option value="🏠 Hogar">🏠 Hogar</option>
+          <option value="💳 Deuda / Préstamo">💳 Deuda / Préstamo</option>
+          <option value="🎁 Regalo">🎁 Regalo</option>
+          <option value="✈️ Viaje">✈️ Viaje</option>
+          <option value="📦 Otro">📦 Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" id="inputDate">
+      </div>
+      <div class="form-group full">
+        <label>Comentario (opcional)</label>
+        <textarea id="inputComment" placeholder="¿De qué era este gasto?"></textarea>
+      </div>
+    </div>
+    <button class="btn-add" id="btnSubmit" onclick="addExpense()">Añadir gasto</button>
+    <button class="btn-add" id="btnCancel" onclick="cancelEdit()" style="display:none; background: var(--surface2); border: 1px solid var(--accent3); color: var(--accent3); margin-top: 8px;">Cancelar edición</button>
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="chart-card" id="chartCard">
+    <div class="chart-title">📊 Gastos por categoría</div>
+    <div class="chart-container">
+      <canvas id="expenseChart"></canvas>
+    </div>
+  </div>
+
+  <!-- CATEGORÍAS -->
+  <div class="cats-card" id="catsCard">
+    <div class="cats-title">📈 Resumen por categoría</div>
+    <div id="catsList"></div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-bar" id="filterBar" style="display:none">
+    <button class="filter-btn active" onclick="filterExpenses('all')">Todos</button>
+    <button class="filter-btn" onclick="filterExpenses('7days')">Últimos 7 días</button>
+    <button class="filter-btn" onclick="filterExpenses('30days')">Este mes</button>
+  </div>
+
+  <!-- LISTA -->
+  <div class="list-card">
+    <div class="list-header">
+      <div class="list-title">📋 Registro</div>
+      <button class="btn-clear" onclick="clearAll()">Borrar todo</button>
+    </div>
+    <div id="expensesList">
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <div>Aún no hay gastos registrados.<br>¡Añade tu primer gasto!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-title" id="modalTitle">Editar gasto</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Concepto</label>
+        <input type="text" id="modalName" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label>Importe (€)</label>
+        <input type="number" id="modalAmount" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="modalCat">
+          <option value="🛒 Mercado">🛒 Mercado</option>
+          <option value="🍔 Comida fuera">🍔 Comida fuera</option>
+          <option value="🚇 Transporte">🚇 Transporte</option>
+          <option value="💊 Salud">💊 Salud</option>
+          <option value="💪 Gym / Deporte">💪 Gym / Deporte</option>
+          <option value="🎬 Ocio">🎬 Ocio</option>
+          <option value="👗 Ropa">👗 Ropa</option>
+          <option value="📱 Tecnología">📱 Tecnología</option>
+          <option value="🏠 Hogar">🏠 Hogar</option>
+          <option value="💳 Deuda / Préstamo">💳 Deuda / Préstamo</option>
+          <option value="🎁 Regalo">🎁 Regalo</option>
+          <option value="✈️ Viaje">✈️ Viaje</option>
+          <option value="📦 Otro">📦 Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" id="modalDate">
+      </div>
+      <div class="form-group full">
+        <label>Comentario (opcional)</label>
+        <textarea id="modalComment"></textarea>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CAT_COLORS = [
+    '#00d9ff','#00ff88','#ff4477','#ff88ff','#ffaa00',
+    '#88ff00','#ff00ff','#ff7700','#00ff77','#ff0088'
+  ];
+
+  let currentUser = null;
+  let allUsers = JSON.parse(localStorage.getItem('finteam_users') || '{}');
+  let currentUserExpenses = [];
+  let filteredExpenses = [];
+  let chart = null;
+  let editingId = null;
+  let currentFilter = 'all';
+  let selectedCategory = null;
+
+  document.getElementById('inputDate').valueAsDate = new Date();
+
+  function getCatIcon(cat) {
+    return cat.split(' ')[0];
+  }
+
+  function login() {
+    const name = document.getElementById('loginName').value.trim();
+    const budget = parseFloat(document.getElementById('loginBudget').value);
+    const error = document.getElementById('loginError');
+
+    if (!name || name.length < 2) {
+      error.textContent = '❌ Pon un nombre válido';
+      error.classList.add('show');
+      return;
+    }
+
+    if (isNaN(budget) || budget < 300 || budget > 2000) {
+      error.textContent = '❌ Presupuesto entre 300€ y 2000€';
+      error.classList.add('show');
+      return;
+    }
+
+    error.classList.remove('show');
 
     if (!allUsers[name]) {
       allUsers[name] = { budget, expenses: [] };
